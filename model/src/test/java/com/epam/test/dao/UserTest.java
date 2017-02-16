@@ -1,12 +1,19 @@
-package com.epam.test.model;
+package com.epam.test.dao;
 
 import org.junit.Assert;
+
+/**
+ * Test
+ */
 
 public class UserTest {
 
     public static final Integer USER_ID = 11;
+
     public static final String USER_LOGIN = "Sergey";
+
     public static final String USER_PASSWORD = "qwerty";
+
     public static final String USER_DESCRIPTION = "Description";
 
     @org.junit.Test

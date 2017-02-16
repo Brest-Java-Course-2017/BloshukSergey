@@ -1,8 +1,13 @@
-package com.epam.test.model;
+package com.epam.test.dao;
 
 import java.util.Objects;
 
+/**
+ * Bean class
+ */
+
 public class User {
+
     private Integer userId;
 
     private String login;
@@ -10,6 +15,16 @@ public class User {
     private String password;
 
     private String description;
+
+    public User() {
+    }
+
+    public User(Integer userId, String login, String password, String description) {
+        this.userId = userId;
+        this.login = login;
+        this.password = password;
+        this.description = description;
+    }
 
     public Integer getUserId() {
         return userId;
