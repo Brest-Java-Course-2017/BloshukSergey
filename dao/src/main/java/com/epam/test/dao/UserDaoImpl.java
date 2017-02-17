@@ -2,6 +2,7 @@ package com.epam.test.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -21,18 +22,31 @@ import java.util.Map;
  */
 
 public class UserDaoImpl implements UserDao {
-    private static final String SQL_GET_ALL_USERS = "SELECT * FROM app_user;";
-    private static final String SQL_GET_USER_BY_ID = "SELECT * FROM app_user WHERE user_id=:user_id;";
-    private static final String SQL_ADD_USER = "INSERT INTO app_user (user_id, login, password, description) VALUES (:user_id, :login, :password, :description);";
-    private static final String SQL_UPDATE_USER = "UPDATE app_user SET login=:login, password=:password, description=:description WHERE user_id=:user_id;";
-    private static final String SQL_DELETE_USER = "DELETE FROM app_user WHERE user_id=:user_id;";
+
+    @Value("${sql.getAllUsers}")
+    private String SQL_GET_ALL_USERS;
+
+    @Value("${sql.getUserById}")
+    private String SQL_GET_USER_BY_ID;
+
+    @Value("${sql.addUser}")
+    private String SQL_ADD_USER;
+
+    @Value("${sql.updateUser}")
+    private String SQL_UPDATE_USER;
+
+    @Value("${sql.deleteUser}")
+    private String SQL_DELETE_USER;
 
     private static final String USER_ID = "user_id";
+
     private static final String LOGIN = "login";
+
     private static final String PASSWORD = "password";
+
     private static final String DESCRIPTION = "description";
 
-    private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
 
     private JdbcTemplate jdbcTemplate;
 

@@ -1,5 +1,7 @@
 package com.epam.test.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +19,17 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
 public class UserDaoImplTest {
-    public static final User USER = new User(Integer.valueOf(3), "TestLogin", "qwerty", "Test");
-    public static final Integer USER_ID = 1;
+    private static final User USER = new User(Integer.valueOf(3), "TestLogin", "qwerty", "Test");
+    private static final Integer USER_ID = 1;
+    private static final Logger LOGGER = LogManager.getLogger(UserDaoImplTest.class);
 
     @Autowired
     UserDao userDao;
 
     @Test
     public void getAllUsers() throws Exception {
+        LOGGER.debug("test: getAllUsers()");
+
         List<User> users = userDao.getAllUsers();
 
         assertNotNull(users);
@@ -33,6 +38,7 @@ public class UserDaoImplTest {
 
     @Test
     public void getUserById() throws Exception {
+        LOGGER.debug("test: getUserById()");
         User user = userDao.getUserById(USER_ID);
 
         assertNotNull(user);
@@ -41,6 +47,8 @@ public class UserDaoImplTest {
 
     @Test
     public void addUser() throws Exception {
+        LOGGER.debug("test: addUser()");
+
         Integer response = userDao.addUser(USER);
 
         assertTrue("Response:", response.intValue() == 1);
@@ -50,6 +58,8 @@ public class UserDaoImplTest {
 
     @Test
     public void updateUser() throws Exception {
+        LOGGER.debug("test: updateUser()");
+
         userDao.addUser(USER);
         User tempUser = new User(USER.getUserId(), "login", "password", "description");
         userDao.updateUser(tempUser);
@@ -62,6 +72,8 @@ public class UserDaoImplTest {
 
     @Test
     public void deleteUser() throws Exception {
+        LOGGER.debug("test: deleteUser()");
+
         userDao.addUser(USER);
         userDao.deleteUser(USER.getUserId());
         User tempUser = userDao.getUserById(USER.getUserId());
