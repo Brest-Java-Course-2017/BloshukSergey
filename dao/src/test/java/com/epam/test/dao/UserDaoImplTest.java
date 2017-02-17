@@ -8,9 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * UserDaoImpl test
@@ -68,7 +66,7 @@ public class UserDaoImplTest {
         userDao.deleteUser(USER.getUserId());
         User tempUser = userDao.getUserById(USER.getUserId());
 
-        assertTrue("Delete user:", tempUser == null);
+        assertNull("Delete user:", tempUser);
     }
 
 }
