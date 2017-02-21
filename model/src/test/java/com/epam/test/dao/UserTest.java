@@ -7,7 +7,6 @@ import org.junit.Assert;
  */
 
 public class UserTest {
-
     public static final Integer USER_ID = 11;
 
     public static final String USER_LOGIN = "Sergey";
@@ -43,5 +42,4 @@ public class UserTest {
         user.setDescription("Description");
         Assert.assertEquals("User description: ", USER_DESCRIPTION, user.getDescription());
     }
-
 }

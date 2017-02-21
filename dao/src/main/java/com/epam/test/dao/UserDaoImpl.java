@@ -2,26 +2,27 @@ package com.epam.test.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * UserDao implementation.
  */
 
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl implements UserDao, InitializingBean {
 
     @Value("${sql.getAllUsers}")
     private String SQL_GET_ALL_USERS;
@@ -37,6 +38,9 @@ public class UserDaoImpl implements UserDao {
 
     @Value("${sql.deleteUser}")
     private String SQL_DELETE_USER;
+
+    @Value("${sql.getUserByLogin}")
+    private String SQL_GET_USER_BY_LOGIN;
 
     private static final String USER_ID = "user_id";
 
@@ -66,50 +70,74 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(Integer userId) {
-        LOGGER.debug("getAllUsers({})", userId);
+        LOGGER.debug("getUserById({})", userId);
 
-        try {
-            SqlParameterSource namedParameters = new MapSqlParameterSource(USER_ID, userId);
-            return namedParameterJdbcTemplate.queryForObject(SQL_GET_USER_BY_ID, namedParameters, new UserRowMapper());
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+        SqlParameterSource namedParameters = new MapSqlParameterSource(USER_ID, userId);
+        User user = namedParameterJdbcTemplate.queryForObject(SQL_GET_USER_BY_ID, namedParameters, new UserRowMapper());
+
+        return user;
+    }
+
+    @Override
+    public User getUserByLogin(String userLogin) {
+        LOGGER.debug("getUserByLogin({})", userLogin);
+
+        SqlParameterSource namedParameters = new MapSqlParameterSource(LOGIN, userLogin);
+        User user = namedParameterJdbcTemplate.queryForObject(SQL_GET_USER_BY_LOGIN, namedParameters, new UserRowMapper());
+
+        return user;
     }
 
     @Override
     public Integer addUser(User user) {
         LOGGER.debug("addUser({})", user);
 
-        Map<String, Object> userParameters = getUserParameters(user);
-        return namedParameterJdbcTemplate.update(SQL_ADD_USER, userParameters);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        MapSqlParameterSource parameterSource = getUserParameters(user);
+        namedParameterJdbcTemplate.update(SQL_ADD_USER, parameterSource, keyHolder);
+
+        return keyHolder.getKey().intValue();
     }
 
     @Override
-    public void updateUser(User user) {
+    public Integer updateUser(User user) {
         LOGGER.debug("updateUser({})", user);
 
-        Map<String, Object> userParameters = getUserParameters(user);
-        namedParameterJdbcTemplate.update(SQL_UPDATE_USER, userParameters);
+        MapSqlParameterSource parameterSource = getUserParameters(user);
+        Integer id = namedParameterJdbcTemplate.update(SQL_UPDATE_USER, parameterSource);
+
+        return id;
     }
 
     @Override
-    public void deleteUser(Integer userId) {
+    public Integer deleteUser(Integer userId) {
         LOGGER.debug("deleteUser({})", userId);
 
         SqlParameterSource namedParameters = new MapSqlParameterSource(USER_ID, userId);
-        namedParameterJdbcTemplate.update(SQL_DELETE_USER, namedParameters);
+        Integer id = namedParameterJdbcTemplate.update(SQL_DELETE_USER, namedParameters);
+
+        return id;
     }
 
+    private final static MapSqlParameterSource getUserParameters(User user) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(USER_ID, user.getUserId());
+        parameterSource.addValue(LOGIN, user.getLogin());
+        parameterSource.addValue(PASSWORD, user.getPassword());
+        parameterSource.addValue(DESCRIPTION, user.getDescription());
 
-    private final static Map<String, Object> getUserParameters(User user) {
-        Map<String, Object> userParameters = new HashMap<>();
+        return parameterSource;
+    }
 
-        userParameters.put(LOGIN, user.getLogin());
-        userParameters.put(PASSWORD, user.getPassword());
-        userParameters.put(DESCRIPTION, user.getDescription());
-        userParameters.put(USER_ID, user.getUserId());
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if(jdbcTemplate == null) {
+            throw new BeanCreationException("JdbcTemplate is null");
+        }
 
-        return userParameters;
+        if(namedParameterJdbcTemplate == null) {
+            throw new BeanCreationException("NamedParameterJdbcTemplate is null");
+        }
     }
 
     /**
