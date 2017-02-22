@@ -28,6 +28,7 @@
     <module>dao</module>
     <module>test-db</module>
     <module>service-api</module>
+    <module>service</module>
   </modules>
 
   <properties>
@@ -36,6 +37,7 @@
     <spring.version>4.3.6.RELEASE</spring.version>
     <junit.version>4.12</junit.version>
     <log4j.version>2.7</log4j.version>
+    <easymock.version>3.4</easymock.version>
   </properties>
 
   <distributionManagement>
@@ -132,6 +134,13 @@
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-jcl</artifactId>
         <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.easymock</groupId>
+        <artifactId>easymock</artifactId>
+        <version>${easymock.version}</version>
+        <scope>test</scope>
       </dependency>
 
     </dependencies>
