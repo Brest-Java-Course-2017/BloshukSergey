@@ -18,7 +18,7 @@
 
 <body>
 
-<div class="container-fluid">
+<div class="container-fluid" th:with="item = ${user}" th:object="${item}">
 
     <nav class="navbar navbar-toggleable-sm navbar-inverse fixed-top bg-inverse">
 
@@ -35,20 +35,24 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <form class="form-inline my-2 my-lg-0">
-                <button class="btn btn-default" onclick="saveUser()">
+                <button class="btn btn-default" th:onclick="'updateUser(' + ${item.userId} + ')'">
                     <i class="material-icons">&#xe161;</i>
                     <span>Save</span>
                 </button>
-                <button class="btn btn-default" onclick="deleteUser()">
+                <button class="btn btn-default" th:onclick="'deleteUser(' + ${item.userId} + ')'">
                     <i class="material-icons">&#xe872;</i>
                     <span>Delete</span>
+                </button>
+                <button class="btn btn-default" th:onclick="'createUser()'">
+                    <i class="material-icons">&#xe872;</i>
+                    <span>Add</span>
                 </button>
             </form>
         </div>
     </nav>
 
     <div class="row">
-        <form role="form" th:with="item = ${user}" th:object="${item}">
+        <form role="form">
 
             <div class="form-group row">
                 <label for="inputLogin" class="col-3 form-control-label">Login:</label>
@@ -57,6 +61,21 @@
                            th:value=" ${item.login}"/>
 
                 </div>
+
+                <label for="inputLogin" class="col-3 form-control-label">Password:</label>
+                <div class="col-7">
+                    <input class="form-control" id="inputPassword" placeholder="Password" value="User 1" required="true" autofocus="" type="text"
+                           th:value=" ${item.password}"/>
+
+                </div>
+
+                <label for="inputLogin" class="col-3 form-control-label">Description:</label>
+                <div class="col-7">
+                    <input class="form-control" id="inputDescription" placeholder="Description" value="User 1" required="true" autofocus="" type="text"
+                           th:value=" ${item.description}"/>
+
+                </div>
+
             </div>
         </form>
     </div>

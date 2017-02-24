@@ -1,7 +1,7 @@
 function editUser(id) {
     $.ajax(
         {
-            url: '/user?id=' + id,
+            url: '/users/user?id=' + id,
             dataType: 'html',
             success: function (response) {
                 console.log(response);
@@ -34,12 +34,16 @@ function createUserPage() {
     );
 }
 
-function createUserPost() {
+function createUser() {
     $.ajax(
         {
             type: "POST",
             url: '/users/add',
-            data: { 'login': $("#inputLogin").val(), 'password': $("#inputPassword").val() },
+            data: {
+                'login': $("#inputLogin").val(),
+                'password': $("#inputPassword").val(),
+                'description': $("#inputDescription").val(),
+            },
             success: function (response) {
                 console.log(response);
                 document.open();
@@ -51,4 +55,26 @@ function createUserPost() {
             }
         }
     );
+}
+
+function deleteUser(id) {
+    $.ajax(
+        {
+            type: 'DELETE',
+            url: '/users/del?userId=' + id
+        }
+    );
+}
+
+function updateUser(id) {
+    $.ajax({
+        type: 'PUT',
+        url: '/users/upd',
+        data: {
+            'id': id,
+            'login': $('#inputLogin').val(),
+            'password': $('#inputPassword').val(),
+            'description': $('#inputDescription').val()
+        }
+    });
 }

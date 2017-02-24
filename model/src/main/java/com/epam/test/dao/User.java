@@ -31,6 +31,12 @@ public class User {
         this.description = description;
     }
 
+    public User(String login, String password, String description) {
+        this.login = login;
+        this.password = password;
+        this.description = description;
+    }
+
     public Integer getUserId() {
         return userId;
     }
