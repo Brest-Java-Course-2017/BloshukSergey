@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -49,5 +50,24 @@ public class UsersController {
         model.addAttribute("user", user);
 
         return "user";
+    }
+
+    @GetMapping(value = "/users/add")
+    public String addUser(Model model) {
+        LOGGER.debug("get: /users/add");
+
+        User user = new User();
+        model.addAttribute("user", user);
+
+        return "add-user";
+    }
+
+    @PostMapping(value = "/users/add")
+    public String createUser(@RequestParam("login") String login, @RequestParam("password") String password) {
+        LOGGER.debug("post: /users/add " + login + " " + password);
+
+        userService.addUser(new User(login,password));
+
+        return "redirect:users";
     }
 }
