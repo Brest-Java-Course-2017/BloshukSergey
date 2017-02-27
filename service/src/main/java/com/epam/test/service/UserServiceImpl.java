@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService, InitializingBean {
 
     @Override
     public List<User> getAllUsers() throws DataAccessException {
-        LOGGER.debug("getUserById()");
+        LOGGER.debug("getAllUsers()");
 
         return userDao.getAllUsers();
     }
