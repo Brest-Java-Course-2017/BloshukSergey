@@ -31,6 +31,8 @@
     <module>service</module>
     <module>web-app</module>
     <module>rest-app</module>
+    <module>client-api</module>
+    <module>client-rest</module>
   </modules>
 
   <properties>
@@ -93,6 +95,16 @@
       <dependency>
         <groupId>com.epam.test</groupId>
         <artifactId>rest-app</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.epam.test</groupId>
+        <artifactId>client-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.epam.test</groupId>
+        <artifactId>client-rest</artifactId>
         <version>${project.version}</version>
       </dependency>
 
