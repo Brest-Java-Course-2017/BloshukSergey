@@ -21,7 +21,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, Integer quantityTickets) {
+    public Customer(Integer sessionId, String firstName, String lastName, Integer quantityTickets) {
+        this.sessionId = sessionId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.quantityTickets = quantityTickets;

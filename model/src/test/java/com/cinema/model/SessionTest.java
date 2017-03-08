@@ -40,12 +40,12 @@ public class SessionTest {
 
     @Test
     public void setDate() throws Exception {
-        LOGGER.debug("test: setDate()");
+        LOGGER.debug("test: setSessionDate()");
 
         Session session = new Session();
-        session.setDate(DATE);
+        session.setSessionDate(DATE);
 
-        assertEquals("Date", DATE, session.getDate());
+        assertEquals("Date", DATE, session.getSessionDate());
     }
 
 }

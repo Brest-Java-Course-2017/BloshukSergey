@@ -13,20 +13,20 @@ public class Session {
 
     private String movieName;
 
-    private LocalDate date;
+    private LocalDate sessionDate;
 
     public Session() {
     }
 
-    public Session(String movieName, LocalDate date) {
+    public Session(String movieName, LocalDate sessionDate) {
         this.movieName = movieName;
-        this.date = date;
+        this.sessionDate = sessionDate;
     }
 
-    public Session(Integer sessionId, String movieName, LocalDate date) {
+    public Session(Integer sessionId, String movieName, LocalDate sessionDate) {
         this.sessionId = sessionId;
         this.movieName = movieName;
-        this.date = date;
+        this.sessionDate = sessionDate;
     }
 
     public Integer getSessionId() {
@@ -45,12 +45,12 @@ public class Session {
         this.movieName = movieName;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getSessionDate() {
+        return sessionDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setSessionDate(LocalDate sessionDate) {
+        this.sessionDate = sessionDate;
     }
 
     @Override
@@ -60,12 +60,12 @@ public class Session {
         Session session = (Session) o;
         return Objects.equals(sessionId, session.sessionId) &&
                 Objects.equals(movieName, session.movieName) &&
-                Objects.equals(date, session.date);
+                Objects.equals(sessionDate, session.sessionDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sessionId, movieName, date);
+        return Objects.hash(sessionId, movieName, sessionDate);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Session {
         return "Session{" +
                 "sessionId=" + sessionId +
                 ", movieName='" + movieName + '\'' +
-                ", date=" + date +
+                ", sessionDate=" + sessionDate +
                 '}';
     }
 }
