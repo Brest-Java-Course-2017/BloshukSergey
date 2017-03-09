@@ -63,7 +63,7 @@ public class CustomerDaoImplTest {
     }
 
     @Test(expected = DataAccessException.class)
-    public void getCustomerWithNotExistId() throws Exception {
+    public void getCustomerWithNotExistlId() throws Exception {
         LOGGER.debug("test: getCustomerWithNotExistId({})", BAD_ID);
 
         Customer customer = customerDao.getCustomerById(BAD_ID);
@@ -82,6 +82,13 @@ public class CustomerDaoImplTest {
         assertNotNull("Customer must be not null", customer);
         assertEquals("First name", ADD_CUSTOMER.getFirstName(), customer.getFirstName());
         assertEquals("Last name", ADD_CUSTOMER.getLastName(), customer.getLastName());
+    }
+
+    @Test(expected = DataAccessException.class)
+    public void addCustomerWithExistId() throws Exception {
+        LOGGER.debug("test: addCustomerWithExistId({})", EXIST_CUSTOMER);
+
+        Integer customerId = customerDao.addCustomer(BAD_CUSTOMER);
     }
 
     @Test(expected = DataAccessException.class)
