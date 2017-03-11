@@ -4,6 +4,8 @@ import com.cinema.dao.CustomerDao;
 import com.cinema.model.Customer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ import static org.springframework.util.Assert.*;
 
 @Service
 @Transactional
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService, InitializingBean {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -87,5 +89,12 @@ public class CustomerServiceImpl implements CustomerService {
         Integer quantity = customerDao.deleteCustomer(customerId);
 
         return quantity;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (customerDao == null) {
+            throw new BeanCreationException("customerDao is null");
+        }
     }
 }

@@ -15,9 +15,9 @@
   </bean>
 
   <jdbc:initialize-database data-source="dataSource">
-    <jdbc:script location="sql/create-session-table.sql"/>
-    <jdbc:script location="sql/create-customer-table.sql"/>
-    <jdbc:script location="sql/insert-data.sql"/>
+    <jdbc:script location="classpath*:sql/create-session-table.sql"/>
+    <jdbc:script location="classpath*:sql/create-customer-table.sql"/>
+    <jdbc:script location="classpath*:sql/insert-data.sql"/>
   </jdbc:initialize-database>
 
   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

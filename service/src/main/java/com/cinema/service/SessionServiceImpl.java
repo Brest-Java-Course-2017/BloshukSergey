@@ -5,6 +5,8 @@ import com.cinema.model.Session;
 import com.cinema.model.SessionWithQuantityTickets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,7 @@ import static org.springframework.util.Assert.*;
 
 @Service
 @Transactional
-public class SessionServiceImpl implements SessionService {
+public class SessionServiceImpl implements SessionService, InitializingBean {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -104,5 +106,12 @@ public class SessionServiceImpl implements SessionService {
         Integer quantity = sessionDao.deleteSession(sessionId);
 
         return quantity;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (sessionDao == null) {
+            throw new BeanCreationException("sessionDao is null");
+        }
     }
 }

@@ -26,21 +26,21 @@ public class SessionServiceImplMockTest {
 
     private static final Logger LOGGER = LogManager.getLogger(SessionServiceImplMockTest.class);
 
-    public static final Session SESSION_1 = new Session(1,"Logan", LocalDate.of(2017, 3, 3));
+    private static final Session SESSION_1 = new Session(1,"Logan", LocalDate.of(2017, 3, 3));
 
-    public static final Session SESSION_2 = new Session(2,"Lego movie", LocalDate.of(2017, 6, 4));
+    private static final Session SESSION_2 = new Session(2,"Lego movie", LocalDate.of(2017, 6, 4));
 
-    public static final SessionWithQuantityTickets SESSION_WITH_QUANTITY_TICKETS_1 = new SessionWithQuantityTickets(1,"Logan", LocalDate.of(2017, 3, 3), 2);
+    private static final SessionWithQuantityTickets SESSION_WITH_QUANTITY_TICKETS_1 = new SessionWithQuantityTickets(1,"Logan", LocalDate.of(2017, 3, 3), 2);
 
-    public static final SessionWithQuantityTickets SESSION_WITH_QUANTITY_TICKETS_2 = new SessionWithQuantityTickets(2,"Lego movie", LocalDate.of(2017, 6, 4), 10);
+    private static final SessionWithQuantityTickets SESSION_WITH_QUANTITY_TICKETS_2 = new SessionWithQuantityTickets(2,"Lego movie", LocalDate.of(2017, 6, 4), 10);
 
-    public static final LocalDate FIRST_DATE = LocalDate.of(2017, 3, 1);
+    private static final LocalDate FIRST_DATE = LocalDate.of(2017, 3, 1);
 
-    public static final LocalDate SECOND_DATE = LocalDate.of(2017, 3, 22);
+    private static final LocalDate SECOND_DATE = LocalDate.of(2017, 3, 22);
 
-    public static final Integer QUANTITY_UPDATED = 1;
+    private static final Integer QUANTITY_UPDATED = 1;
 
-    public static final Integer QUANTITY_DELETED = 1;
+    private static final Integer QUANTITY_DELETED = 1;
 
     @Autowired
     private SessionService sessionService;

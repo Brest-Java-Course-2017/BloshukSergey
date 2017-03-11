@@ -1,5 +1,8 @@
 package com.cinema.model;
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -13,6 +16,7 @@ public class Session {
 
     private String movieName;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private LocalDate sessionDate;
 
     public Session() {
