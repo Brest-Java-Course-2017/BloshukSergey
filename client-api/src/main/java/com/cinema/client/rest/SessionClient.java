@@ -1,25 +1,24 @@
-package com.cinema.service;
+package com.cinema.client.rest;
 
+import com.cinema.client.exception.ServerDataAccessException;
 import com.cinema.model.Session;
 import com.cinema.model.SessionWithQuantityTickets;
-import org.springframework.dao.DataAccessException;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface SessionService {
-
+public interface SessionClient {
     /**
      *
      * @return all sessions.
      */
-    List<Session> getAllSessions() throws DataAccessException;
+    List<Session> getAllSessions() throws ServerDataAccessException;
 
     /**
      *
      * @return all sessions with quantity tickets.
      */
-    List<SessionWithQuantityTickets> getAllSessionsWithQuantityTickets() throws DataAccessException;
+    List<SessionWithQuantityTickets> getAllSessionsWithQuantityTickets() throws ServerDataAccessException;
 
     /**
      * firstDate < secondDate
@@ -28,40 +27,40 @@ public interface SessionService {
      * @param secondDate end date.
      * @return list of SessionWithQuantityTickets between two dates.
      */
-    List<SessionWithQuantityTickets> getAllSessionsWithQuantityTicketsDateToDate(LocalDate firstDate, LocalDate secondDate) throws DataAccessException;
+    List<SessionWithQuantityTickets> getAllSessionsWithQuantityTicketsDateToDate(LocalDate firstDate, LocalDate secondDate) throws ServerDataAccessException;
 
     /**
      *
      * @param sessionId session's id.
      * @return session from database.
      */
-    Session getSessionById(Integer sessionId) throws DataAccessException;
+    Session getSessionById(Integer sessionId) throws ServerDataAccessException;
 
     /**
      * Add new session
      *
      * @param session new session.
      * @return session's id.
-     * @throws DataAccessException
+     * @throws ServerDataAccessException
      */
-    Integer addSession(Session session) throws DataAccessException;
+    Integer addSession(Session session) throws ServerDataAccessException;
 
     /**
      * Update session
      *
      * @param session with new values.
      * @return the number of update rows.
-     * @throws DataAccessException
+     * @throws ServerDataAccessException
      */
-    Integer updateSession(Session session) throws DataAccessException;
+    Integer updateSession(Session session) throws ServerDataAccessException;
 
     /**
      * Delete session from session.
      *
      * @param sessionId session's id.
      * @return quantity of delete session.
-     * @throws DataAccessException
+     * @throws ServerDataAccessException
      */
-    Integer deleteSession(Integer sessionId) throws DataAccessException;
+    Integer deleteSession(Integer sessionId) throws ServerDataAccessException;
 
 }
