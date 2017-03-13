@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Sessions</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Session id</th>
+        <th>Movie name</th>
+        <th>Date</th>
+    </tr>
+    <tr class="table-row"
+        th:if="${sessions != null}"
+        th:each="item : ${sessions}">
+        <td th:text="${item.sessionId}"></td>
+        <td th:text="${item.movieName}"></td>
+        <td th:text="${item.sessionDate}"></td>
+    </tr>
+</table>
+</body>
+</html>

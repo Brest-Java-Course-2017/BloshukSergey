@@ -1,4 +1,4 @@
-package com.cinema.client.rest;
+package com.cinema.client;
 
 import com.cinema.client.exception.ServerDataAccessException;
 import com.cinema.model.Customer;

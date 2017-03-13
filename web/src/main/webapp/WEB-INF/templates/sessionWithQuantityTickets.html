@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Sessions</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>#</th>
+        <th>Movie name</th>
+        <th>Date</th>
+        <th>Tickets</th>
+    </tr>
+    <tr class="table-row"
+        th:if="${sessions != null}"
+        th:each="item, iterationStatus : ${sessions}">
+        <td th:text="${iterationStatus.count}"></td>
+        <td th:text="${item.movieName}"></td>
+        <td th:text="${item.sessionDate}"></td>
+        <td th:text="${item.quantityTickets}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -35,11 +35,12 @@ public class CustomerControllerTest {
     private static final Customer CUSTOMER_2 = new Customer(2, 1, "Bob", "Bob", 1);
 
     private static final Integer EXPECTED = 1;
-    public static final String CUSTOMER_GET_ALL = "/customer/getAll";
-    public static final String CUSTOMER_GET_BY_ID_ID_1 = "/customer/getById?id=1";
-    public static final String CUSTOMER_ADD = "/customer/add";
-    public static final String CUSTOMER_UPDATE = "/customer/update";
-    public static final String CUSTOMER_DELETE_ID_1 = "/customer/delete?id=1";
+
+    private static final String CUSTOMER_GET_ALL = "/customer/getAll";
+    private static final String CUSTOMER_GET_BY_ID_ID_1 = "/customer/getById?id=1";
+    private static final String CUSTOMER_ADD = "/customer/add";
+    private static final String CUSTOMER_UPDATE = "/customer/update";
+    private static final String CUSTOMER_DELETE_ID_1 = "/customer/delete?id=1";
 
     private MockMvc mockMvc;
 
