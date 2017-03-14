@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -55,7 +55,7 @@ public class SessionClientImpl implements SessionClient, InitializingBean {
     }
 
     @Override
-    public List<SessionWithQuantityTickets> getAllSessionsWithQuantityTicketsDateToDate(LocalDate firstDate, LocalDate secondDate) throws ServerDataAccessException {
+    public List<SessionWithQuantityTickets> getAllSessionsWithQuantityTicketsDateToDate(Date firstDate, Date secondDate) throws ServerDataAccessException {
         LOGGER.debug("getAllSessionsWithQuantityTicketsDateToDate()");
 
         ResponseEntity responseEntity = restTemplate.getForEntity(

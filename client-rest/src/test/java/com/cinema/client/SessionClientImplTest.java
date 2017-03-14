@@ -19,9 +19,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.assertEquals;
@@ -32,19 +34,19 @@ import static org.junit.Assert.assertNotNull;
 @PropertySource("classpath:url.properties")
 public class SessionClientImplTest {
 
-    private static final Session SESSION_1 = new Session(1, "Logan", LocalDate.of(2017, 3, 3));
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-    private static final Session SESSION_2 = new Session(2, "Lego movie", LocalDate.of(2017, 6, 4));
+    private static Session SESSION_1;
 
-    private static final SessionWithQuantityTickets SESSION_WITH_QUANTITY_TICKETS_1 =
-            new SessionWithQuantityTickets(1, "Logan", LocalDate.of(2017, 3, 3), 2);
+    private static Session SESSION_2;
 
-    private static final SessionWithQuantityTickets SESSION_WITH_QUANTITY_TICKETS_2 =
-            new SessionWithQuantityTickets(2, "Lego movie", LocalDate.of(2017, 6, 4), 10);
+    private static SessionWithQuantityTickets SESSION_WITH_QUANTITY_TICKETS_1;
 
-    private static final LocalDate FIRST_DATE = LocalDate.of(2017, 3, 1);
+    private static SessionWithQuantityTickets SESSION_WITH_QUANTITY_TICKETS_2;
 
-    private static final LocalDate SECOND_DATE = LocalDate.of(2017, 3, 22);
+    private static Date FIRST_DATE;
+
+    private static Date SECOND_DATE;
 
     private static final Integer EXPECTED = 1;
 
@@ -68,7 +70,21 @@ public class SessionClientImplTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+        SESSION_1 = new Session(1, "Logan", SIMPLE_DATE_FORMAT.parse("2017-3-3"));
+
+        SESSION_2 = new Session(2, "Lego movie", SIMPLE_DATE_FORMAT.parse("2017-6-4"));
+
+        SESSION_WITH_QUANTITY_TICKETS_1 =
+                new SessionWithQuantityTickets(1, "Logan", SIMPLE_DATE_FORMAT.parse("2017-3-3"), 2);
+
+        SESSION_WITH_QUANTITY_TICKETS_2 =
+                new SessionWithQuantityTickets(2, "Lego movie", SIMPLE_DATE_FORMAT.parse("2017-6-4"), 10);
+
+        FIRST_DATE = SIMPLE_DATE_FORMAT.parse("2017-3-1");
+
+        SECOND_DATE = SIMPLE_DATE_FORMAT.parse("2017-3-22");
+        
         reset(mockRestTemplate);
     }
 

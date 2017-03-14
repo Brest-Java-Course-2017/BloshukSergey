@@ -1,6 +1,6 @@
 package com.cinema.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 public class SessionWithQuantityTickets extends Session {
@@ -11,12 +11,12 @@ public class SessionWithQuantityTickets extends Session {
 
     }
 
-    public SessionWithQuantityTickets(String movieName, LocalDate date, Integer quantityTickets) {
+    public SessionWithQuantityTickets(String movieName, Date date, Integer quantityTickets) {
         super(movieName, date);
         this.quantityTickets = quantityTickets;
     }
 
-    public SessionWithQuantityTickets(Integer sessionId, String movieName, LocalDate date, Integer quantityTickets) {
+    public SessionWithQuantityTickets(Integer sessionId, String movieName, Date date, Integer quantityTickets) {
         super(sessionId, movieName, date);
         this.quantityTickets = quantityTickets;
     }

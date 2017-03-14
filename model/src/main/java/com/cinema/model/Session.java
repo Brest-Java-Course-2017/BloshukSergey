@@ -1,9 +1,9 @@
 package com.cinema.model;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 
@@ -16,18 +16,18 @@ public class Session {
 
     private String movieName;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    private LocalDate sessionDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date sessionDate;
 
     public Session() {
     }
 
-    public Session(String movieName, LocalDate sessionDate) {
+    public Session(String movieName, Date sessionDate) {
         this.movieName = movieName;
         this.sessionDate = sessionDate;
     }
 
-    public Session(Integer sessionId, String movieName, LocalDate sessionDate) {
+    public Session(Integer sessionId, String movieName, Date sessionDate) {
         this.sessionId = sessionId;
         this.movieName = movieName;
         this.sessionDate = sessionDate;
@@ -49,11 +49,11 @@ public class Session {
         this.movieName = movieName;
     }
 
-    public LocalDate getSessionDate() {
+    public Date getSessionDate() {
         return sessionDate;
     }
 
-    public void setSessionDate(LocalDate sessionDate) {
+    public void setSessionDate(Date sessionDate) {
         this.sessionDate = sessionDate;
     }
 

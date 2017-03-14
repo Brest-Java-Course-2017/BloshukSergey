@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -106,7 +106,7 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
-    public List<SessionWithQuantityTickets> getAllSessionsWithQuantityTicketsDateToDate(LocalDate firstDate, LocalDate secondDate) throws DataAccessException {
+    public List<SessionWithQuantityTickets> getAllSessionsWithQuantityTicketsDateToDate(Date firstDate, Date secondDate) throws DataAccessException {
         LOGGER.debug("getAllSessionsWithQuantityTicketsDateToDate(from {} to {})", firstDate, secondDate);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource()
@@ -170,7 +170,7 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
             Session session = new Session(
                     rs.getInt(SESSION_ID),
                     rs.getString(MOVIE_NAME),
-                    rs.getDate(SESSION_DATE).toLocalDate()
+                    rs.getDate(SESSION_DATE)
             );
             return session;
         }
@@ -182,7 +182,7 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
             SessionWithQuantityTickets session = new SessionWithQuantityTickets(
                     rs.getInt(SESSION_ID),
                     rs.getString(MOVIE_NAME),
-                    rs.getDate(SESSION_DATE).toLocalDate(),
+                    rs.getDate(SESSION_DATE),
                     rs.getInt(QUANTITY_TICKETS)
             );
             return session;

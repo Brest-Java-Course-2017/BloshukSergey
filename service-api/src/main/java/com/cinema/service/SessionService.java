@@ -4,7 +4,7 @@ import com.cinema.model.Session;
 import com.cinema.model.SessionWithQuantityTickets;
 import org.springframework.dao.DataAccessException;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface SessionService {
@@ -28,7 +28,7 @@ public interface SessionService {
      * @param secondDate end date.
      * @return list of SessionWithQuantityTickets between two dates.
      */
-    List<SessionWithQuantityTickets> getAllSessionsWithQuantityTicketsDateToDate(LocalDate firstDate, LocalDate secondDate) throws DataAccessException;
+    List<SessionWithQuantityTickets> getAllSessionsWithQuantityTicketsDateToDate(Date firstDate, Date secondDate) throws DataAccessException;
 
     /**
      *

@@ -7,10 +7,7 @@
 <body>
 <input type="text" th:field="${session.sessionId}">
 <input type="text" th:field="${session.movieName}">
-<input type="text" class="form-control" id="session.sessionDate" name="session.sessionDate" placeholder="session.sessionDate" value="session.sessionDate" required="true" autofocus=""
-       th:value="${#temporals.format(session.sessionDate)}">
-<!--<input type="text" th:id="sessionDate" th:name="sessionDate" th:field="${#dates.formatISO(session.sessionDate)}">-->
-<!--, 'yyyy-MMM-dd'-->
+<input type="date" id="sessionDate" name="sessionDate" th:value="${{session.sessionDate}}">
 
 </body>
 </html>

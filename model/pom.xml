@@ -30,12 +30,10 @@
       <artifactId>log4j-core</artifactId>
     </dependency>
 
-    <!--Json-->
     <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
     </dependency>
-
   </dependencies>
 
 </project>

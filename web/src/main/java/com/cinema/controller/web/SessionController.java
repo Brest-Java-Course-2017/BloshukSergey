@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -43,11 +43,11 @@ public class SessionController {
     @ResponseStatus(value = HttpStatus.FOUND)
     @RequestMapping(value = "/getAllWithTicketsDateToDate",method = RequestMethod.GET)
     public List<SessionWithQuantityTickets> getAllWithTicketsDateToDate(@RequestParam("firstDate")
-                                                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                        LocalDate firstDate,
+                                                                        @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                        Date firstDate,
                                                                         @RequestParam("secondDate")
-                                                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                        LocalDate secondDate,
+                                                                        @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                        Date secondDate,
                                                                         Model model) {
         LOGGER.debug("web: getAllWithTicketsDateToDate({}, {})", firstDate, secondDate);
 
@@ -68,7 +68,7 @@ public class SessionController {
             session = sessionClient.getSessionById(sessionId);
         }
         else {
-            session = new Session(0,"Movie name", LocalDate.now());
+            session = new Session(0,"Movie name", new Date(System.currentTimeMillis()));
         }
 
         LOGGER.debug("Response: {}", session);

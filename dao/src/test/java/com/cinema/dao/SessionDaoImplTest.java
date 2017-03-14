@@ -4,6 +4,7 @@ import com.cinema.model.Session;
 import com.cinema.model.SessionWithQuantityTickets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,29 +13,32 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-spring-dao.xml"})
 @Transactional
 public class SessionDaoImplTest {
 
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
     private static final Logger LOGGER = LogManager.getLogger(SessionDaoImplTest.class);
 
-    private static final LocalDate FIRST_DATE = LocalDate.of(2017, 1, 1);
+    private static Date FIRST_DATE;
 
-    private static final LocalDate SECOND_DATE = LocalDate.of(2017, 6, 20);
+    private static Date SECOND_DATE;
 
-    private static final Session EXIST_SESSION = new Session(1, "Logan", LocalDate.of(2017, 3, 3));
 
-    private static final Session UPDATE_SESSION = new Session(1, "Logan", LocalDate.of(2017, 4, 4));
+    private static Session EXIST_SESSION;
 
-    private static final Session NEW_SESSION = new Session("Lego movie", LocalDate.of(2017, 11, 10));
+    private static Session UPDATE_SESSION;
+
+    private static Session NEW_SESSION;
 
     private static final Integer QUANTITY_SESSION_ONE = 1;
 
@@ -44,6 +48,19 @@ public class SessionDaoImplTest {
 
     @Autowired
     private SessionDao sessionDao;
+
+    @Before
+    public void setUp() throws Exception {
+        FIRST_DATE = SIMPLE_DATE_FORMAT.parse("2017-1-1");
+
+        SECOND_DATE = SIMPLE_DATE_FORMAT.parse("22017-6-20");
+
+        EXIST_SESSION = new Session(1, "Logan", SIMPLE_DATE_FORMAT.parse("2017-3-3"));
+
+        UPDATE_SESSION = new Session(1, "Logan", SIMPLE_DATE_FORMAT.parse("2017-4-4"));
+
+        NEW_SESSION = new Session("Lego movie", SIMPLE_DATE_FORMAT.parse("2017-11-10"));
+    }
 
     @Test
     public void getAllSessions() throws Exception {

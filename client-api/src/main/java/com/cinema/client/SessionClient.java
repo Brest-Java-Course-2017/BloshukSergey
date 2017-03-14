@@ -4,7 +4,7 @@ import com.cinema.client.exception.ServerDataAccessException;
 import com.cinema.model.Session;
 import com.cinema.model.SessionWithQuantityTickets;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface SessionClient {
@@ -27,7 +27,7 @@ public interface SessionClient {
      * @param secondDate end date.
      * @return list of SessionWithQuantityTickets between two dates.
      */
-    List<SessionWithQuantityTickets> getAllSessionsWithQuantityTicketsDateToDate(LocalDate firstDate, LocalDate secondDate) throws ServerDataAccessException;
+    List<SessionWithQuantityTickets> getAllSessionsWithQuantityTicketsDateToDate(Date firstDate, Date secondDate) throws ServerDataAccessException;
 
     /**
      *

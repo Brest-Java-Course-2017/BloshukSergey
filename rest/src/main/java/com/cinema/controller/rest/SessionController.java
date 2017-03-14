@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -51,11 +51,11 @@ public class SessionController implements InitializingBean {
     @ResponseStatus(value = HttpStatus.FOUND)
     @RequestMapping(value = "/getAllWithTicketsDateToDate",method = RequestMethod.GET)
     public List<SessionWithQuantityTickets> getAllWithTicketsDateToDate(@RequestParam("firstDate")
-                                                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                        LocalDate firstDate,
+                                                                        @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                        Date firstDate,
                                                                         @RequestParam("secondDate")
-                                                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                        LocalDate secondDate) {
+                                                                        @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                        Date secondDate) {
         LOGGER.debug("rest: getAllWithTicketsDateToDate({}, {})", firstDate, secondDate);
 
         List<SessionWithQuantityTickets> sessions =
