@@ -41,7 +41,6 @@
     <module>service-api</module>
     <module>service</module>
     <module>rest</module>
-    <module>web</module>
     <module>client-api</module>
     <module>client-rest</module>
 
@@ -92,11 +91,6 @@
       <dependency>
         <groupId>com.cinema</groupId>
         <artifactId>rest</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.cinema</groupId>
-        <artifactId>web</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
