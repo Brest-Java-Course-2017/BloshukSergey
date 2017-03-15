@@ -20,4 +20,22 @@ public class RestErrorHandler {
 
         return "DataAccessException: " + ex.getLocalizedMessage();
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public String handleIllegalArgumentException(IllegalArgumentException ex){
+        LOGGER.debug("Handling IllegalArgumentException: ", ex);
+
+        return "IllegalArgumentException: " + ex.getLocalizedMessage();
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public String handleIllegalStateException(IllegalStateException ex){
+        LOGGER.debug("Handling IllegalStateException: ", ex);
+
+        return "IllegalStateException: " + ex.getLocalizedMessage();
+    }
 }

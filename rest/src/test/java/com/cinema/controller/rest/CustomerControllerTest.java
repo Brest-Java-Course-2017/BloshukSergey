@@ -41,6 +41,7 @@ public class CustomerControllerTest {
     private static final String CUSTOMER_ADD = "/customer/add";
     private static final String CUSTOMER_UPDATE = "/customer/update";
     private static final String CUSTOMER_DELETE_ID_1 = "/customer/delete?id=1";
+    private static final String CUSTOMER_GET_ALL_BY_SESSION_ID = "/customer/getAllBySessionId?id=2";
 
     private MockMvc mockMvc;
 
@@ -90,7 +91,7 @@ public class CustomerControllerTest {
         expect(customerServiceMock.getCustomersBySessionId(CUSTOMER_1.getSessionId())).andReturn(customers);
         replay(customerServiceMock);
 
-        mockMvc.perform(get("/customer/getAllBySessionId?id=2").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(CUSTOMER_GET_ALL_BY_SESSION_ID).accept(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
 

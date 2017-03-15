@@ -26,7 +26,6 @@ public class SessionServiceImpl implements SessionService, InitializingBean {
     @Autowired
     private SessionDao sessionDao;
 
-
     @Override
     public List<Session> getAllSessions() throws DataAccessException {
         LOGGER.debug("getAllSessions()");

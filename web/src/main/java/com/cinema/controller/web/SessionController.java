@@ -7,10 +7,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,6 @@ public class SessionController {
     @Autowired
     private SessionClient sessionClient;
 
-    @ResponseStatus(value = HttpStatus.FOUND)
     @RequestMapping(value = "/getAllWithTickets",method = RequestMethod.GET)
     public String getAllWithTickets(Model model){
         LOGGER.debug("web: getAllWithTickets()");
@@ -40,7 +40,6 @@ public class SessionController {
         return "sessionWithQuantityTickets";
     }
 
-    @ResponseStatus(value = HttpStatus.FOUND)
     @RequestMapping(value = "/getAllWithTicketsDateToDate", method = RequestMethod.GET)
     public List<SessionWithQuantityTickets> getAllWithTicketsDateToDate(@RequestParam("firstDate")
                                                                         @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -99,7 +98,7 @@ public class SessionController {
         return REDIRECT_GET_ALL_WITH_TICKETS;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public String update(@RequestParam("sessionId") Integer sessionId,
                          @RequestParam("movieName") String movieName,
                          @DateTimeFormat(pattern = "yyyy-MM-dd")

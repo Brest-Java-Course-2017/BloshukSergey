@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cinema sessions</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<h1>SESSIONS</h1>
+
+<div>
+    <center>
+        <label>From:</label>
+        <input type="date" id="fromDate" name="id">
+
+        <label>To:</label>
+        <input type="date" id="toDate" name="name">
+
+        <button id="btnFilter">DO FILTER</button>
+    </center>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Movie name</th>
+            <th>Date</th>
+            <th>Tickets</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="sessionList">
+        </tbody>
+    </table>
+</div>
+
+<hr />
+
+<form id="sessionForm">
+    <div class="mainArea">
+
+        <label>Session ID:</label>
+        <input id="sessionId" name="id" type="text" disabled/>
+
+        <label>Movie name:</label>
+        <input type="text" id="movieName" name="name" required>
+
+        <label>Date:</label>
+        <input type="date" id="sessionDate" name="sessionDate" required>
+
+        <button id="btnSave">Save</button>
+        <button id="btnClean">Clear</button>
+
+    </div>
+</form>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

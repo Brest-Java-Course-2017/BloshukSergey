@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cinema customers</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<h1>CUSTOMERS</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Tickets</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="customerList">
+        </tbody>
+    </table>
+</div>
+
+<hr />
+
+<form id="customerForm">
+    <div class="mainArea">
+
+        <label>Customer id:</label>
+        <input id="customerId" name="firstName" type="text" disabled/>
+
+        <label>Session id::</label>
+        <input id="sessionId" name="firstName" type="text" disabled/>
+
+        <label>First name:</label>
+        <input id="firstName" name="firstName" type="text" required/>
+
+        <label>Last name:</label>
+        <input id="lastName" name="lastName" type="text" required>
+
+        <label>Tickets:</label>
+        <input id="quantityTickets" name="quantityTickets" type="text" required>
+
+        <button id="btnCustomerSave">Save</button>
+        <button id="btnCustomerClean">Clear</button>
+
+    </div>
+</form>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.js"></script>
+<!--<script src="js/main.js"></script>-->
+<script src="js/customer.js"></script>
+</body>
+</html>
