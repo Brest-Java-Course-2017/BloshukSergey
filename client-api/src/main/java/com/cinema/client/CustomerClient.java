@@ -14,6 +14,12 @@ public interface CustomerClient {
 
     /**
      *
+     * @return all customers by session id.
+     */
+    List<Customer> getCustomersBySessionId(Integer sessionId) throws ServerDataAccessException;
+
+    /**
+     *
      * @param customerId customer's id.
      * @return customer.
      */

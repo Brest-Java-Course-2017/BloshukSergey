@@ -10,10 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +20,8 @@ import java.util.List;
 public class SessionController {
 
     private static final Logger LOGGER = LogManager.getLogger(CustomerController.class);
+
+    public static final String REDIRECT_GET_ALL_WITH_TICKETS = "redirect:/session/getAllWithTickets";
 
     @Autowired
     private SessionClient sessionClient;
@@ -66,9 +65,11 @@ public class SessionController {
         Session session;
         if(sessionId != null) {
             session = sessionClient.getSessionById(sessionId);
+            model.addAttribute("method", "\'update\'");
         }
         else {
             session = new Session(0,"Movie name", new Date(System.currentTimeMillis()));
+            model.addAttribute("method", "\'add\'");
         }
 
         LOGGER.debug("Response: {}", session);
@@ -77,4 +78,35 @@ public class SessionController {
         return "sessionAddEdit";
     }
 
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String delete(@RequestParam(value = "id") Integer sessionId) {
+        LOGGER.debug("web: delete({})", sessionId);
+
+        sessionClient.deleteSession(sessionId);
+
+        return REDIRECT_GET_ALL_WITH_TICKETS;
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String add(@RequestParam("sessionId") Integer sessionId,
+                      @RequestParam("movieName") String movieName,
+                      @RequestParam("sessionDate") Date sessionDate) {
+        LOGGER.debug("web: add({}, {}, {})", sessionId, movieName, sessionDate);
+
+        sessionClient.addSession(new Session(sessionId, movieName, sessionDate));
+
+        return REDIRECT_GET_ALL_WITH_TICKETS;
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    public String update(@RequestParam("sessionId") Integer sessionId,
+                         @RequestParam("movieName") String movieName,
+                         @DateTimeFormat(pattern = "yyyy-MM-dd")
+                         @RequestParam("sessionDate") Date sessionDate) {
+        LOGGER.debug("web: update({}, {}, {})", sessionId, movieName, sessionDate);
+
+        sessionClient.updateSession(new Session(sessionId, movieName, sessionDate));
+
+        return REDIRECT_GET_ALL_WITH_TICKETS;
+    }
 }

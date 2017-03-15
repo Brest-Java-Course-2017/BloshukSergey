@@ -7,6 +7,7 @@ import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -44,6 +45,9 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     @Value("${sql.getAllCustomers}")
     String SQL_GET_ALL_CUSTOMERS;
 
+    @Value("${sql.getCustomersBySessionId}")
+    String SQL_GET_CUSTOMERS_BY_SESSION_ID;
+
     @Value("${sql.getCustomerById}")
     String SQL_GET_CUSTOMER_BY_ID;
 
@@ -78,6 +82,15 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
         LOGGER.debug("getAllCustomers()");
 
         List<Customer> customers = jdbcTemplate.query(SQL_GET_ALL_CUSTOMERS, new CustomerRowMapper());
+
+        return customers;
+    }
+
+    @Override
+    public List<Customer> getCustomersBySessionId(Integer sessionId) throws DataAccessException {
+        LOGGER.debug("getCustomersBySessionId({})", sessionId);
+
+        List<Customer> customers = jdbcTemplate.query(SQL_GET_CUSTOMERS_BY_SESSION_ID, new CustomerRowMapper(), sessionId);
 
         return customers;
     }

@@ -43,6 +43,16 @@ public class CustomerClientImpl implements CustomerClient, InitializingBean {
     }
 
     @Override
+    public List<Customer> getCustomersBySessionId(Integer sessionId) throws ServerDataAccessException {
+        LOGGER.debug("getCustomersBySessionId()");
+
+        ResponseEntity responseEntity = restTemplate.getForEntity(url + urlCustomer + "/getAllBySessionId?id=" + sessionId, List.class);
+        List<Customer> customers = (List<Customer>) responseEntity.getBody();
+
+        return customers;
+    }
+
+    @Override
     public Customer getCustomerById(Integer customerId) throws ServerDataAccessException {
         LOGGER.debug("getCustomerById({})", customerId);
 

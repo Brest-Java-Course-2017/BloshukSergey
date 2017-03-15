@@ -82,6 +82,22 @@ public class CustomerControllerTest {
     }
 
     @Test
+    public void getAllBySessionId() throws Exception {
+        LOGGER.debug("mock test: getAllBySessionId()");
+
+        List<Customer> customers = new ArrayList<>();
+        customers.add(CUSTOMER_1);
+
+        expect(customerServiceMock.getCustomersBySessionId(CUSTOMER_1.getSessionId())).andReturn(customers);
+        replay(customerServiceMock);
+
+        mockMvc.perform(get("/customer/getAllBySessionId?id=2").accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isFound());
+    }
+
+
+    @Test
     public void getById() throws Exception {
         LOGGER.debug("mock test: getById()");
 

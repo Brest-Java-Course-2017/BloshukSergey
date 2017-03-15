@@ -52,6 +52,16 @@ public class CustomerDaoImplTest {
     }
 
     @Test
+    public void getCustomersBySessionId() throws Exception {
+        LOGGER.debug("test: getCustomersBySessionId()");
+
+        List<Customer> customers = customerDao.getCustomersBySessionId(EXIST_CUSTOMER.getSessionId());
+
+        assertNotNull("Customers must be not null", customers);
+        assertTrue("Customers must be greater than zero", customers.size() > 0);
+    }
+
+    @Test
     public void getCustomerById() throws Exception {
         LOGGER.debug("test: getCustomerById({})", EXIST_CUSTOMER.getCustomerId());
 

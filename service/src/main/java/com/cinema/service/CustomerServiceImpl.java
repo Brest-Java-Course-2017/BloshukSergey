@@ -38,6 +38,18 @@ public class CustomerServiceImpl implements CustomerService, InitializingBean {
     }
 
     @Override
+    public List<Customer> getCustomersBySessionId(Integer sessionId) throws DataAccessException {
+        LOGGER.debug("getCustomersBySessionId({})", sessionId);
+
+        notNull(sessionId, "sessionId must not be null");
+        isTrue(sessionId > 0, "sessionId must be greater than 0");
+
+        List<Customer> customers = customerDao.getCustomersBySessionId(sessionId);
+
+        return customers;
+    }
+
+    @Override
     public Customer getCustomerById(Integer customerId) throws DataAccessException {
         LOGGER.debug("getCustomerById({})", customerId);
 

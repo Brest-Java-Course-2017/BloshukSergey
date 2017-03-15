@@ -35,6 +35,17 @@ public class CustomerController implements InitializingBean {
 
     @ResponseBody
     @ResponseStatus(value = HttpStatus.FOUND)
+    @RequestMapping(value = "/getAllBySessionId",method = RequestMethod.GET)
+    public List<Customer> getAllBySessionId(@RequestParam("id") Integer sessionId){
+        LOGGER.debug("rest: getAllBySessionId({})", sessionId);
+
+        List<Customer> customers = customerService.getCustomersBySessionId(sessionId);
+
+        return customers;
+    }
+
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.FOUND)
     @RequestMapping(value = "/getById", method = RequestMethod.GET)
     public Customer getById(@RequestParam("id") Integer customerId) {
         LOGGER.debug("rest: getById({})", customerId);

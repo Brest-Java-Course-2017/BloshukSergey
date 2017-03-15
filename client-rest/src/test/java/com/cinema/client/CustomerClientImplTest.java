@@ -79,6 +79,23 @@ public class CustomerClientImplTest {
     }
 
     @Test
+    public void getCustomersBySessionId() throws Exception {
+        LOGGER.debug("mock test: getCustomersBySessionId()");
+
+        List<Customer> customers = new ArrayList<>();
+        customers.add(CUSTOMER_1);
+
+        expect(mockRestTemplate.getForEntity(url + urlCustomer + "/getAllBySessionId?id=" + CUSTOMER_1.getSessionId(), List.class))
+                .andReturn(new ResponseEntity<List>(customers, HttpStatus.OK));
+        replay(mockRestTemplate);
+
+        List<Customer> result = customerClient.getCustomersBySessionId(CUSTOMER_1.getSessionId());
+
+        assertNotNull("Result must be not null", result);
+        assertEquals("Lists size", customers.size(), result.size());
+    }
+
+    @Test
     public void getCustomerById() throws Exception {
         LOGGER.debug("mock test: getCustomerById()");
 

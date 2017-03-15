@@ -65,6 +65,21 @@ public class CustomerServiceImplMockTest {
         assertNotNull("Customers must be not null", customers);
         assertTrue("Customers must be greater than zero", customers.size() == expectCustomers.size());
     }
+    @Test
+    public void getCustomersBySessionId() throws Exception {
+        LOGGER.debug("mock test: getCustomersBySessionId()");
+
+        List<Customer> expectCustomers = new ArrayList<Customer>();
+        expectCustomers.add(CUSTOMER_1);
+
+        expect(customerDaoMock.getCustomersBySessionId(CUSTOMER_1.getSessionId())).andReturn(expectCustomers);
+        replay(customerDaoMock);
+
+        List<Customer> customers = customerService.getCustomersBySessionId(CUSTOMER_1.getSessionId());
+
+        assertNotNull("Customers must be not null", customers);
+        assertEquals("Customer", expectCustomers.size(), customers.size());
+    }
 
     @Test
     public void getCustomerById() throws Exception {
