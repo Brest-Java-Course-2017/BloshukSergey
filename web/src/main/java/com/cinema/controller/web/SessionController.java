@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
+
 @Controller
 @RequestMapping(value = "/session")
 public class SessionController {
@@ -40,7 +41,7 @@ public class SessionController {
     }
 
     @ResponseStatus(value = HttpStatus.FOUND)
-    @RequestMapping(value = "/getAllWithTicketsDateToDate",method = RequestMethod.GET)
+    @RequestMapping(value = "/getAllWithTicketsDateToDate", method = RequestMethod.GET)
     public List<SessionWithQuantityTickets> getAllWithTicketsDateToDate(@RequestParam("firstDate")
                                                                         @DateTimeFormat(pattern = "yyyy-MM-dd")
                                                                         Date firstDate,

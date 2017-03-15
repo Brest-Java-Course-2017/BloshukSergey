@@ -26,7 +26,6 @@ public class SessionController implements InitializingBean {
     private SessionService sessionService;
 
     @ResponseBody
-    @ResponseStatus(value = HttpStatus.FOUND)
     @RequestMapping(value = "/getAll",method = RequestMethod.GET)
     public List<Session> getAll(){
         LOGGER.debug("rest: getAll()");
@@ -37,7 +36,6 @@ public class SessionController implements InitializingBean {
     }
 
     @ResponseBody
-    @ResponseStatus(value = HttpStatus.FOUND)
     @RequestMapping(value = "/getAllWithTickets",method = RequestMethod.GET)
     public List<SessionWithQuantityTickets> getAllWithTickets() {
         LOGGER.debug("rest: getAllWithTickets()");
@@ -48,7 +46,6 @@ public class SessionController implements InitializingBean {
     }
 
     @ResponseBody
-    @ResponseStatus(value = HttpStatus.FOUND)
     @RequestMapping(value = "/getAllWithTicketsDateToDate",method = RequestMethod.GET)
     public List<SessionWithQuantityTickets> getAllWithTicketsDateToDate(@RequestParam("firstDate")
                                                                         @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -65,7 +62,6 @@ public class SessionController implements InitializingBean {
     }
 
     @ResponseBody
-    @ResponseStatus(value = HttpStatus.FOUND)
     @RequestMapping(value = "/getById", method = RequestMethod.GET)
     public Session getById(@RequestParam("id") Integer sessionId) {
         LOGGER.debug("rest: getById({})", sessionId);
