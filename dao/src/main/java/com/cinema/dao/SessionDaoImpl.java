@@ -84,7 +84,6 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
         }
     }
 
-
     @Override
     public List<Session> getAllSessions() throws DataAccessException {
         LOGGER.debug("test: getAllSessions()");
