@@ -7,6 +7,7 @@ import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -64,7 +65,7 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
-    public Integer add(Session session) {
+    public Integer add(Session session)  throws DataAccessException {
         LOGGER.debug("addSession({})", session);
 
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(session);
@@ -75,7 +76,7 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
-    public Integer delete(Integer id) {
+    public Integer delete(Integer id) throws DataAccessException {
         LOGGER.debug("deleteSession({})", id);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, id);
@@ -85,7 +86,7 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
-    public Integer update(Session session) {
+    public Integer update(Session session) throws DataAccessException {
         LOGGER.debug("update({})", session);
 
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(session);
@@ -95,7 +96,7 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
-    public Session getById(Integer id) {
+    public Session getById(Integer id) throws DataAccessException {
         LOGGER.debug("getById({})", id);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, id);
@@ -108,7 +109,7 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
-    public List<Session> getAll() {
+    public List<Session> getAll() throws DataAccessException {
         LOGGER.debug("test: getAll()");
 
         List<Session> sessions = namedParameterJdbcTemplate.query(SQL_GET_ALL, new SessionRowMapper());

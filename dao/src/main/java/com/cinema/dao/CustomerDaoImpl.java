@@ -7,6 +7,7 @@ import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -63,7 +64,7 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
-    public Integer add(Customer customer) {
+    public Integer add(Customer customer)  throws DataAccessException {
         LOGGER.debug("add({})", customer);
 
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(customer);
@@ -74,7 +75,7 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
-    public Integer delete(Integer id) {
+    public Integer delete(Integer id) throws DataAccessException {
         LOGGER.debug("delete({})", id);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(CUSTOMER_ID, id);
@@ -84,7 +85,7 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
-    public Integer update(Customer customer) {
+    public Integer update(Customer customer) throws DataAccessException {
         LOGGER.debug("update({})", customer);
 
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(customer);
@@ -94,7 +95,7 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
-    public List<Customer> getByName(String name) {
+    public List<Customer> getByName(String name) throws DataAccessException {
         LOGGER.debug("getByName({})", name);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(NAME, name);
@@ -104,7 +105,7 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
-    public Customer getById(Integer id) {
+    public Customer getById(Integer id) throws DataAccessException {
         LOGGER.debug("getById({})", id);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(CUSTOMER_ID, id);
@@ -114,7 +115,7 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
-    public List<Customer> getAll() {
+    public List<Customer> getAll() throws DataAccessException {
         LOGGER.debug("getAll()");
 
         List<Customer> customers = namedParameterJdbcTemplate.query(SQL_GET_ALL, new CustomerRowMapper());

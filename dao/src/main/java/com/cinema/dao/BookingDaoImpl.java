@@ -8,6 +8,7 @@ import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -71,7 +72,7 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
-    public List<Customer> getCustomersBySessionId(Integer id) {
+    public List<Customer> getCustomersBySessionId(Integer id) throws DataAccessException {
         LOGGER.debug("getCustomersBySessionId({})", id);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, id);
@@ -81,7 +82,7 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
-    public List<SessionWithSeats> getSessionWithSeats(Date firstDate, Date secondDate) {
+    public List<SessionWithSeats> getSessionsWithSeats(Date firstDate, Date secondDate) throws DataAccessException {
         LOGGER.debug("test: getSessionWithSeats()");
 
         SqlParameterSource parameterSource = new MapSqlParameterSource()
@@ -96,7 +97,7 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
-    public Integer delete(Integer sessionId, Integer customerId) {
+    public Integer delete(Integer sessionId, Integer customerId)  throws DataAccessException {
         LOGGER.debug("delete({}, {})", sessionId, customerId);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, sessionId)
@@ -107,7 +108,7 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
-    public Integer add(Integer sessionId, Integer customerId) {
+    public Integer add(Integer sessionId, Integer customerId) throws DataAccessException {
         LOGGER.debug("add({}, {})", sessionId, customerId);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, sessionId)
@@ -118,7 +119,7 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
-    public Integer getSeatsBySessionId(Integer id) {
+    public Integer getSeatsBySessionId(Integer id) throws DataAccessException {
         LOGGER.debug("getSeatsBySessionId({})", id);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, id);

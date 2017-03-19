@@ -19,7 +19,7 @@ public interface BookingDao {
      *
      * @return session with seats.
      */
-    List<SessionWithSeats> getSessionWithSeats(Date firstDate, Date secondDate);
+    List<SessionWithSeats> getSessionsWithSeats(Date firstDate, Date secondDate);
 
     /**
      *

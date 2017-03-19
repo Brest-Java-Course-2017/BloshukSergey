@@ -66,20 +66,20 @@ public class BookingDaoImplTest {
     }
 
     @Test
-    public void getSessionWithSeats() throws Exception {
+    public void getSessionsWithSeats() throws Exception {
         LOGGER.debug("test: getSessionWithSeats()");
 
-        List<SessionWithSeats> sessionWithSeats = bookingDao.getSessionWithSeats(null, null);
+        List<SessionWithSeats> sessionWithSeats = bookingDao.getSessionsWithSeats(null, null);
 
         assertNotNull("sessionWithSeats must be not null", sessionWithSeats);
         assertTrue("sessionWithSeats must be greater than zero", sessionWithSeats.size() > 0);
     }
 
     @Test
-    public void getSessionWithSeatsDateToDate() throws Exception {
+    public void getSessionsWithSeatsDateToDate() throws Exception {
         LOGGER.debug("test: getSessionWithSeats()");
 
-        List<SessionWithSeats> sessionWithSeats = bookingDao.getSessionWithSeats(FIRST_DATE, SECOND_DATE);
+        List<SessionWithSeats> sessionWithSeats = bookingDao.getSessionsWithSeats(FIRST_DATE, SECOND_DATE);
 
         assertNotNull("sessionWithSeats must be not null", sessionWithSeats);
         assertTrue("sessionWithSeats must be greater than zero", sessionWithSeats.size() > 0);

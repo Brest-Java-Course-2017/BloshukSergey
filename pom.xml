@@ -39,6 +39,7 @@
     <module>dao</module>
     <module>test-db</module>
     <module>service-api</module>
+    <module>service</module>
 
   </modules>
 
@@ -72,6 +73,16 @@
       <dependency>
         <groupId>com.cinema</groupId>
         <artifactId>test-db</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cinema</groupId>
+        <artifactId>service-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cinema</groupId>
+        <artifactId>ser</artifactId>
         <version>${project.version}</version>
       </dependency>
 
