@@ -29,7 +29,7 @@ public interface CustomerDao {
     /**
      * @return customers by name.
      */
-    Customer getByName(String name);
+    List<Customer> getByName(String name);
 
     /**
      * @return customers by id.

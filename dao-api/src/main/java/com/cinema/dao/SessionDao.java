@@ -1,7 +1,8 @@
 package com.cinema.dao;
 
-import com.cinema.model.Customer;
 import com.cinema.model.Session;
+
+import java.util.List;
 
 public interface SessionDao {
     /**
@@ -27,6 +28,10 @@ public interface SessionDao {
     /**
      * @return session by id.
      */
-    Customer getById(Integer id);
+    Session getById(Integer id);
 
+    /**
+     * @return all sessions.
+     */
+    List<Session> getAll();
 }

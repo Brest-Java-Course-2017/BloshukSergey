@@ -4,6 +4,7 @@ import com.cinema.model.Customer;
 import com.cinema.model.SessionWithSeats;
 
 import java.util.List;
+import java.util.Date;
 
 public interface BookingDao {
 
@@ -18,7 +19,7 @@ public interface BookingDao {
      *
      * @return session with seats.
      */
-    List<SessionWithSeats> getSessionWithSeats();
+    List<SessionWithSeats> getSessionWithSeats(Date firstDate, Date secondDate);
 
     /**
      *
