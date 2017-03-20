@@ -36,6 +36,8 @@ public class BookingDaoImplTest {
 
     private static Customer EXIST_CUSTOMER = new Customer(1, "Sergey Bloshuk");
 
+    private static Customer EXIST_CUSTOMER_2 = new Customer(4, "Denis Nalivko");
+
     private static final Integer EXPECTED = 1;
 
     private static Date FIRST_DATE;
@@ -99,7 +101,7 @@ public class BookingDaoImplTest {
     public void add() throws Exception {
         LOGGER.debug("test: add()");
 
-        Integer id = bookingDao.add(EXIST_SESSION.getSessionId(), EXIST_CUSTOMER.getCustomerId());
+        Integer id = bookingDao.add(EXIST_SESSION.getSessionId(), EXIST_CUSTOMER_2.getCustomerId());
 
         assertNotNull("Session id must be not null", id);
     }
@@ -114,4 +116,13 @@ public class BookingDaoImplTest {
         assertTrue("Seats must be greater than zero", seats > 0);
     }
 
+    @Test
+    public void checkUpBooking1() throws Exception {
+        LOGGER.debug("test: getSeatsBySessionId()");
+
+        Boolean flag = bookingDao.checkUpBooking(EXIST_SESSION.getSessionId(), EXIST_CUSTOMER.getCustomerId());
+
+        assertNotNull("Flag must be not null", flag);
+        assertTrue("Flag must be greater true", flag);
+    }
 }

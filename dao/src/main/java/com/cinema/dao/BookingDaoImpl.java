@@ -41,6 +41,9 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     @Value("${sql.booking.getSeatsBySessionId}")
     String SQL_GET_SEATS_BY_SESSION_ID;
 
+    @Value("${sql.booking.getCountByIds}")
+    String SQL_GET_COUNT_BY_IDS;
+
     private static final String SESSION_ID = "sessionId";
 
     private static final String CUSTOMER_ID = "customerId";
@@ -126,6 +129,16 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
         Integer seats = namedParameterJdbcTemplate.queryForObject(SQL_GET_SEATS_BY_SESSION_ID, parameterSource, Integer.class);
 
         return seats;
+    }
+
+    @Override
+    public Boolean checkUpBooking(Integer sessionId, Integer customerId) {
+        LOGGER.debug("checkUpBooking({}, {})", sessionId, customerId);
+
+        SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, sessionId).addValue(CUSTOMER_ID, customerId);
+        Integer count = namedParameterJdbcTemplate.queryForObject(SQL_GET_COUNT_BY_IDS, parameterSource, Integer.class);
+
+        return count > 0 ? new Boolean(true): new Boolean(false);
     }
 
     private static final class SessionWithSeatsRowMapper implements RowMapper<SessionWithSeats> {

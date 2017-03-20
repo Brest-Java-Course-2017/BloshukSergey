@@ -39,4 +39,12 @@ public interface BookingDao {
      * @return seats
      */
     Integer getSeatsBySessionId(Integer id);
+
+    /**
+     *
+     * @param sessionId session id
+     * @param customerId customer id
+     * @return true if record exist
+     */
+    Boolean checkUpBooking(Integer sessionId, Integer customerId);
 }

@@ -64,7 +64,7 @@ public class BookingController {
     @ResponseStatus(value = HttpStatus.CREATED)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Integer add(@RequestParam(value = "sessionId") Integer sessionId,
-                       @RequestParam(value = "customerId") Integer customerId) {
+                       @RequestParam(value = "customerId") Integer customerId) throws IllegalArgumentException {
         LOGGER.debug("rest: add()");
 
         Integer quantity = bookingService.add(sessionId, customerId);

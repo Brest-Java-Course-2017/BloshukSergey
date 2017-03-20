@@ -27,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService, InitializingBean {
 
     @Override
     public Integer add(Customer customer) throws DataAccessException {
-        LOGGER.debug("addCustomer({})", customer);
+        LOGGER.debug("add({})", customer);
 
         notNull(customer, "customer must not be null");
         hasText(customer.getName(), "Customer's must have name");
@@ -63,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService, InitializingBean {
 
     @Override
     public List<Customer> getByName(String name) throws DataAccessException {
-        LOGGER.debug("getById({})", name);
+        LOGGER.debug("getByName({})", name);
 
         notNull(name, "name must not be null");
         hasText(name, "name must be");

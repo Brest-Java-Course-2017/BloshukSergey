@@ -26,7 +26,7 @@ public class SessionServiceImpl implements SessionService, InitializingBean {
 
     @Override
     public Integer add(Session session) throws DataAccessException {
-        LOGGER.debug("addSession({})", session);
+        LOGGER.debug("add({})", session);
 
         notNull(session, "session must not be null");
         hasText(session.getMovieName(), "session must be had movie name");
@@ -39,7 +39,7 @@ public class SessionServiceImpl implements SessionService, InitializingBean {
 
     @Override
     public Integer delete(Integer id) throws DataAccessException {
-        LOGGER.debug("deleteSession({})", id);
+        LOGGER.debug("delete({})", id);
 
         notNull(id, "sessionId must not be null");
         isTrue(id > 0, "sessionId must be greater than zero");
@@ -51,7 +51,7 @@ public class SessionServiceImpl implements SessionService, InitializingBean {
 
     @Override
     public Integer update(Session session) throws DataAccessException {
-        LOGGER.debug("updateSession({})", session);
+        LOGGER.debug("update({})", session);
 
         notNull(session, "session must not be null");
         hasText(session.getMovieName(), "session must be had movie name");
@@ -64,7 +64,7 @@ public class SessionServiceImpl implements SessionService, InitializingBean {
 
     @Override
     public Session getById(Integer id) throws DataAccessException {
-        LOGGER.debug("getSessionById({})", id);
+        LOGGER.debug("getById({})", id);
 
         notNull(id, "sessionId must not be null");
         isTrue(id > 0, "sessionId must be greater than 0");

@@ -1,8 +1,6 @@
 <Configuration status="WARM">
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <!-- logger{количесво элеметов в пакете(с конца)
-      -->
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </Console>
     <File name="File" fileName="logs/server.log">

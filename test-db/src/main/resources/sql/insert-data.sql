@@ -14,11 +14,13 @@ INSERT INTO customer (customer_id, name) VALUES ('6', 'Mikhail Nazarevich');
 INSERT INTO booking (session_id, customer_id) VALUES ('1', '1');
 INSERT INTO booking (session_id, customer_id) VALUES ('1', '2');
 INSERT INTO booking (session_id, customer_id) VALUES ('1', '3');
-INSERT INTO booking (session_id, customer_id) VALUES ('1', '2');
 INSERT INTO booking (session_id, customer_id) VALUES ('2', '3');
 INSERT INTO booking (session_id, customer_id) VALUES ('2', '4');
 INSERT INTO booking (session_id, customer_id) VALUES ('5', '5');
 INSERT INTO booking (session_id, customer_id) VALUES ('4', '6');
+INSERT INTO booking (session_id, customer_id) VALUES ('4', '5');
+INSERT INTO booking (session_id, customer_id) VALUES ('4', '1');
+INSERT INTO booking (session_id, customer_id) VALUES ('4', '2');
 
 
 

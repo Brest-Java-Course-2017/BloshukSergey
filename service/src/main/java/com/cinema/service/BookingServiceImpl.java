@@ -73,7 +73,12 @@ public class BookingServiceImpl implements BookingService, InitializingBean {
         LOGGER.debug("add({}, {})", sessionId, customerId);
 
         notNull(sessionId, "sessionId must not be null");
-        notNull(sessionId, "customerId must not be null");
+        notNull(customerId, "customerId must not be null");
+
+        Boolean check = bookingDao.checkUpBooking(sessionId, customerId);
+        if(check) {
+            throw new IllegalArgumentException("Booking with sessionId = " + sessionId + " and customerId = " + customerId + " exist already.");
+        }
 
         Session session = sessionDao.getById(sessionId);
         Integer totalSeats = session.getTotalSeats();

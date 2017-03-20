@@ -35,6 +35,7 @@ public class BookingServiceImplMockTest {
     private static final Customer CUSTOMER_1 = new Customer(1, "Sergey Bloshuk");
 
     private static final Customer CUSTOMER_2 = new Customer(2, "Bob");
+    public static final Boolean EXPECTED_FALSE = new Boolean(false);
 
     private static Session SESSION;
 
@@ -131,6 +132,7 @@ public class BookingServiceImplMockTest {
         replay(sessionDaoMock);
 
         expect(bookingDaoMock.getSeatsBySessionId(SESSION.getSessionId())).andReturn(EXPECTED);
+        expect(bookingDaoMock.checkUpBooking(SESSION.getSessionId(), CUSTOMER_1.getCustomerId())).andReturn(EXPECTED_FALSE);
         expect(bookingDaoMock.add(SESSION.getSessionId(), CUSTOMER_1.getCustomerId())).andReturn(EXPECTED);
         replay(bookingDaoMock);
 

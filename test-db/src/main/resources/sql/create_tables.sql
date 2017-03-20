@@ -17,6 +17,7 @@ CREATE TABLE session (
 CREATE TABLE booking (
     session_id	INT NOT NULL,
     customer_id INT NOT NULL,
+    PRIMARY KEY (session_id, customer_id),
     FOREIGN KEY (session_id)    REFERENCES  session     (session_id)    ON DELETE CASCADE,
     FOREIGN KEY (customer_id)   REFERENCES  customer    (customer_id)   ON DELETE CASCADE
 );
