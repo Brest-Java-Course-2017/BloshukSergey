@@ -84,7 +84,7 @@ function getFilterSessions(firstDate, secondDate) {
     $.ajax({
         type: 'GET',
         url: host + "/booking/getSessionsWithSeats?firstDate=" + firstDate + "&secondDate=" + secondDate,
-        dataType: "json", // data type of response
+        dataType: "json",
         success: renderList,
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);

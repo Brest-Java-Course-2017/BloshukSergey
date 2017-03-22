@@ -75,7 +75,7 @@ $(document).on("click", "a", function() {
             // data: ToJSON(getUrlParameter('id'), selectedCustomerId),
             success: function (data, textStatus, jqXHR) {
                 alert('Customer created successfully');
-                getAllCustomers();
+                getCustomersBySessionId();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert('Error: ' + jqXHR.responseText);

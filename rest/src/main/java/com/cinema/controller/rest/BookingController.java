@@ -6,12 +6,13 @@ import com.cinema.service.BookingService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 @CrossOrigin
 @RestController
@@ -19,6 +20,8 @@ import java.util.List;
 public class BookingController {
 
     private static final Logger LOGGER = LogManager.getLogger(BookingController.class);
+
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
     @Autowired
     private BookingService bookingService;
@@ -33,17 +36,20 @@ public class BookingController {
         return customers;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/getSessionsWithSeats", method = RequestMethod.GET)
-    public List<SessionWithSeats> getSessionsWithSeats(@RequestParam(value = "firstDate", required = false)
-                                                       @DateTimeFormat(pattern = "yyyy-MM-dd")
-                                                       Date firstDate,
-                                                       @RequestParam(value = "secondDate", required = false)
-                                                       @DateTimeFormat(pattern = "yyyy-MM-dd")
-                                                       Date secondDate) {
-        LOGGER.debug("rest: getSessionsWithSeats()");
+    @ResponseBody
+    public List<SessionWithSeats> getSessionsWithSeats(
+            @RequestParam(value = "firstDate", required = false) String firstDate,
+            @RequestParam(value = "secondDate", required = false) String secondDate) throws ParseException {
+        LOGGER.debug("rest: getSessionsWithSeats({}, {})", firstDate, secondDate);
 
-        List<SessionWithSeats> sessions = bookingService.getSessionsWithSeats(firstDate, secondDate);
+        List<SessionWithSeats> sessions;
+        if(firstDate == null && secondDate == null) {
+            sessions = bookingService.getSessionsWithSeats(null, null);
+        }
+        else {
+            sessions = bookingService.getSessionsWithSeats(SIMPLE_DATE_FORMAT.parse(firstDate), SIMPLE_DATE_FORMAT.parse(secondDate));
+        }
 
         return sessions;
     }

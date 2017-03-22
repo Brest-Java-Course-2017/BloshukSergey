@@ -17,11 +17,11 @@ import java.util.List;
 
 @EnableWebMvc
 @Configuration
+@Import({SpringJDBCConfiguration.class})
 @ComponentScan({
         "com.cinema.dao",
         "com.cinema.service",
         "com.cinema.controller.rest"})
-@Import({SpringJDBCConfiguration.class})
 public class SpringRestConfiguration {
     @Bean
     public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer(){
@@ -39,8 +39,10 @@ public class SpringRestConfiguration {
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+
         List<MediaType> mediaTypes = new ArrayList<>();
         mediaTypes.add(MediaType.APPLICATION_JSON);
+
         converter.setSupportedMediaTypes(mediaTypes);
         converter.setPrettyPrint(true);
 
@@ -50,8 +52,10 @@ public class SpringRestConfiguration {
     @Bean
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
         RequestMappingHandlerAdapter requestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
+
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
         messageConverters.add(mappingJackson2HttpMessageConverter());
+
         requestMappingHandlerAdapter.setMessageConverters(messageConverters);
 
         return requestMappingHandlerAdapter;
