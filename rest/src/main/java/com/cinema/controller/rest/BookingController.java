@@ -6,13 +6,15 @@ import com.cinema.service.BookingService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @CrossOrigin
 @RestController
@@ -20,8 +22,6 @@ import java.util.Locale;
 public class BookingController {
 
     private static final Logger LOGGER = LogManager.getLogger(BookingController.class);
-
-    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
     @Autowired
     private BookingService bookingService;
@@ -39,17 +39,11 @@ public class BookingController {
     @RequestMapping(value = "/getSessionsWithSeats", method = RequestMethod.GET)
     @ResponseBody
     public List<SessionWithSeats> getSessionsWithSeats(
-            @RequestParam(value = "firstDate", required = false) String firstDate,
-            @RequestParam(value = "secondDate", required = false) String secondDate) throws ParseException {
+            @RequestParam(value = "firstDate", required = false) Date firstDate,
+            @RequestParam(value = "secondDate", required = false) Date secondDate) throws ParseException {
         LOGGER.debug("rest: getSessionsWithSeats({}, {})", firstDate, secondDate);
 
-        List<SessionWithSeats> sessions;
-        if(firstDate == null && secondDate == null) {
-            sessions = bookingService.getSessionsWithSeats(null, null);
-        }
-        else {
-            sessions = bookingService.getSessionsWithSeats(SIMPLE_DATE_FORMAT.parse(firstDate), SIMPLE_DATE_FORMAT.parse(secondDate));
-        }
+        List<SessionWithSeats> sessions = sessions = bookingService.getSessionsWithSeats(firstDate, secondDate);
 
         return sessions;
     }
@@ -76,6 +70,13 @@ public class BookingController {
         Integer quantity = bookingService.add(sessionId, customerId);
 
         return quantity;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
 }
