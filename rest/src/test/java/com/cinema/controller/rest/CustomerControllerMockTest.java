@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = SpringRestMockTestConfiguration.class)
 public class CustomerControllerMockTest {
 
-
     private static final Customer CUSTOMER_1 = new Customer(1, "Sergey Bloshuk");
 
     private static final Customer CUSTOMER_2 = new Customer(2, "Bob");
@@ -48,8 +47,6 @@ public class CustomerControllerMockTest {
     private static final String CUSTOMER_UPDATE = "/customer/update";
 
     private static final String CUSTOMER_DELETE_ID_1 = "/customer/delete?id=1";
-
-    private static final String CUSTOMER_GET_ALL_BY_SESSION_ID = "/customer/getAllBySessionId?id=2";
 
     private MockMvc mockMvc;
 
