@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cinema</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Cinema</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="index.html">Sessions</a></li>
+            <li><a href="#">Customers</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="form-inline">
+    <div class="input-group">
+        <div class="input-group-addon">Session id</div>
+        <input class="form-control" id="sessionId" name="sessionId" type="text" disabled/>
+    </div>
+
+    <div class="input-group">
+        <label class="input-group-addon">Movie name</label>
+        <input class="form-control" id="movieName" name="movieName" type="text" required/>
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-addon">Date</div>
+        <input class="form-control" id="sessionDate" name="sessionDate" type="date" required/>
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-addon">Total seats</div>
+        <input class="form-control" id="totalSeats" name="totalSeats" type="number" required/>
+    </div>
+
+    <div class="btn-group ">
+        <input type="button" class="btn btn-success" id="btnOk" value="Ok" />
+        <input type="button" class="btn btn-default" id="btnCancel" value="Cancel" />
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/viewSession.js"></script>
+</body>
+</html>

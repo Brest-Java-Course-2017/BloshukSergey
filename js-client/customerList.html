@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cinema</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Cinema</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="index.html">Sessions</a></li>
+            <li class="active"><a href="customerList.html">Customers</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>
+                Action
+                <input type="button" class="btn btn-success btn-xs" id="btnAdd" value="+" style="float:right"/>
+            </th>
+        </tr>
+        </thead>
+        <tbody id="customerList">
+        </tbody>
+    </table>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/customerList.js"></script>
+</body>
+</html>
