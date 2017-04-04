@@ -1,5 +1,6 @@
 package com.cinema.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @EnableWebMvc
@@ -40,10 +42,9 @@ public class SpringRestConfiguration {
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 
-        List<MediaType> mediaTypes = new ArrayList<>();
-        mediaTypes.add(MediaType.APPLICATION_JSON);
+        converter.setObjectMapper(new ObjectMapper().findAndRegisterModules());
 
-        converter.setSupportedMediaTypes(mediaTypes);
+        converter.setSupportedMediaTypes(Arrays.asList(MediaType.valueOf("application/json")));
         converter.setPrettyPrint(true);
 
         return converter;
@@ -60,4 +61,16 @@ public class SpringRestConfiguration {
 
         return requestMappingHandlerAdapter;
     }
+
+/*    @Bean
+    public View jsonTemplate() {
+        MappingJackson2JsonView view = new MappingJackson2JsonView();
+        view.setPrettyPrint(true);
+        return view;
+    }
+
+    @Bean
+    public ViewResolver viewResolver() {
+        return new BeanNameViewResolver();
+    }*/
 }

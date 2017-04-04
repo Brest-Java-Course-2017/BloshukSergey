@@ -37,10 +37,8 @@ public class CustomerClientImpl implements CustomerClient, InitializingBean {
     public Integer add(Customer customer) throws ServerDataAccessException {
         LOGGER.debug("add({})", customer);
 
-        ResponseEntity responseEntity = restTemplate.postForEntity(
-                url + urlCustomer + "/add",
-                customer,
-                Integer.class);
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/add").toString();
+        ResponseEntity responseEntity = restTemplate.postForEntity(httpRequest, customer, Integer.class);
         Integer customerId = (Integer) responseEntity.getBody();
 
         return customerId;
@@ -50,12 +48,8 @@ public class CustomerClientImpl implements CustomerClient, InitializingBean {
     public Integer delete(Integer id) throws ServerDataAccessException {
         LOGGER.debug("delete({})", id);
 
-        ResponseEntity<Integer> response= restTemplate.exchange(
-                url + urlCustomer + "/delete?id={id}",
-                HttpMethod.DELETE,
-                null,
-                Integer.class,
-                id);
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/delete?id={id}").toString();
+        ResponseEntity<Integer> response = restTemplate.exchange(httpRequest, HttpMethod.DELETE,null, Integer.class, id);
         Integer quantity = response.getBody();
 
         return quantity;
@@ -65,12 +59,9 @@ public class CustomerClientImpl implements CustomerClient, InitializingBean {
     public Integer update(Customer customer) throws ServerDataAccessException {
         LOGGER.debug("update({})", customer);
 
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/update").toString();
         HttpEntity<Customer> entity = new HttpEntity<>(customer);
-        ResponseEntity<Integer> response= restTemplate.exchange(
-                url + urlCustomer + "/update",
-                HttpMethod.PUT,
-                entity,
-                Integer.class);
+        ResponseEntity<Integer> response= restTemplate.exchange(httpRequest, HttpMethod.PUT, entity, Integer.class);
         Integer quantity = response.getBody();
 
         return quantity;
@@ -80,9 +71,8 @@ public class CustomerClientImpl implements CustomerClient, InitializingBean {
     public List<Customer> getByName(String name) throws ServerDataAccessException {
         LOGGER.debug("getByName({})", name);
 
-        ResponseEntity responseEntity = restTemplate.getForEntity(
-                url + urlCustomer + "/getByName?name=" + name,
-                List.class);
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/getByName?name={name}").toString();
+        ResponseEntity responseEntity = restTemplate.getForEntity(httpRequest, List.class, name);
         List<Customer> customers = (List<Customer>) responseEntity.getBody();
 
         return customers;
@@ -92,9 +82,8 @@ public class CustomerClientImpl implements CustomerClient, InitializingBean {
     public Customer getById(Integer id) throws ServerDataAccessException {
         LOGGER.debug("getById({})", id);
 
-        ResponseEntity responseEntity = restTemplate.getForEntity(
-                url + urlCustomer + "/getById?id=" + id,
-                Customer.class);
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/getById?id={id}").toString();
+        ResponseEntity responseEntity = restTemplate.getForEntity(httpRequest, Customer.class, id);
         Customer customer = (Customer) responseEntity.getBody();
 
         return customer;
@@ -104,6 +93,7 @@ public class CustomerClientImpl implements CustomerClient, InitializingBean {
     public List<Customer> getAll() throws ServerDataAccessException {
         LOGGER.debug("getAll()");
 
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/getAll").toString();
         ResponseEntity responseEntity = restTemplate.getForEntity(url + urlCustomer + "/getAll", List.class);
         List<Customer> customers = (List<Customer>) responseEntity.getBody();
 

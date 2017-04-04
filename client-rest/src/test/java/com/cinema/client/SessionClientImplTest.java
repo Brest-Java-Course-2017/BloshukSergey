@@ -83,7 +83,9 @@ public class SessionClientImplTest {
     public void add() throws Exception {
         LOGGER.debug("mock test: add()");
 
-        expect(mockRestTemplate.postForEntity(url + urlSession + "/add", SESSION_1, Integer.class))
+        String httpRequest = new StringBuffer().append(url).append(urlSession).append("/add").toString();
+
+        expect(mockRestTemplate.postForEntity(httpRequest, SESSION_1, Integer.class))
                 .andReturn(new ResponseEntity<Integer>(SESSION_1.getSessionId(), HttpStatus.CREATED));
         replay(mockRestTemplate);
 
@@ -97,8 +99,9 @@ public class SessionClientImplTest {
     public void delete() throws Exception {
         LOGGER.debug("mock test: deleteSession()");
 
-        expect(mockRestTemplate.exchange(url + urlSession + "/delete?id={id}",
-                HttpMethod.DELETE, null, Integer.class, SESSION_1.getSessionId()))
+        String httpRequest = new StringBuffer().append(url).append(urlSession).append("/delete?id={id}").toString();
+
+        expect(mockRestTemplate.exchange(httpRequest, HttpMethod.DELETE, null, Integer.class, SESSION_1.getSessionId()))
                 .andReturn(new ResponseEntity<Integer>(EXPECTED, HttpStatus.ACCEPTED));
         replay(mockRestTemplate);
 
@@ -112,11 +115,10 @@ public class SessionClientImplTest {
     public void update() throws Exception {
         LOGGER.debug("mock test: update()");
 
+        String httpRequest = new StringBuffer().append(url).append(urlSession).append("/update").toString();
+
         HttpEntity<Session> entity = new HttpEntity<>(SESSION_1);
-        expect(mockRestTemplate.exchange(url + urlSession + "/update",
-                HttpMethod.PUT,
-                entity,
-                Integer.class))
+        expect(mockRestTemplate.exchange(httpRequest, HttpMethod.PUT, entity, Integer.class))
                 .andReturn(new ResponseEntity<Integer>(EXPECTED, HttpStatus.ACCEPTED));
         replay(mockRestTemplate);
 
@@ -130,8 +132,8 @@ public class SessionClientImplTest {
     public void getById() throws Exception {
         LOGGER.debug("mock test: getById()");
 
-        String tempurl = url + urlSession + "/getById?id=" + SESSION_1.getSessionId();
-        expect(mockRestTemplate.getForEntity(tempurl, Session.class))
+        String httpRequest = new StringBuffer().append(url).append(urlSession).append("/getById?id={id}").toString();
+        expect(mockRestTemplate.getForEntity(httpRequest, Session.class, SESSION_1.getSessionId()))
                 .andReturn(new ResponseEntity<Session>(SESSION_1, HttpStatus.FOUND));
         replay(mockRestTemplate);
 
@@ -149,7 +151,9 @@ public class SessionClientImplTest {
         sessions.add(SESSION_1);
         sessions.add(SESSION_2);
 
-        expect(mockRestTemplate.getForEntity(url + urlSession + "/getAll", List.class))
+        String httpRequest = new StringBuffer().append(url).append(urlSession).append("/getAll").toString();
+
+        expect(mockRestTemplate.getForEntity(httpRequest, List.class))
                 .andReturn(new ResponseEntity<List>(sessions, HttpStatus.OK));
         replay(mockRestTemplate);
 

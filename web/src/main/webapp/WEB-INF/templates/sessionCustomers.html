@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customers</title>
+    <link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/session/">Cinema</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/session/">Sessions</a></li>
+            <li><a href="/customer/">Customers</a></li>
+        </ul>
+        <form class="form-inline navbar-form navbar-right" method="get" th:action="@{/customer/search}">
+            <div class="input-group">
+                <input type="hidden" id="sessionId" name="sessionId" th:value="${sessionId}" />
+                <div class="input-group-addon">Name:</div>
+                <input class="form-control" type="text" id="name" name="name" required/>
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-block" id="btnSearch" value="Do it!" />
+                </span>
+            </div>
+        </form>
+    </div>
+</nav>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="customerList">
+        <tr class="table-row"
+            th:if="${customerList != null}"
+            th:each="item,iterationStatus : ${customerList}">
+            <td th:text="${iterationStatus.count}"></td>
+            <td th:text="${item.name}"></td>
+            <td>
+                <div class="btn-group">
+                    <input type="button" class="btn btn-default" value="Delete" th:onclick="'deleteBooking(' + ${sessionId} + ', ' + ${item.customerId} + ')'" />
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="../../resources/js/jquery.js"></script>
+<script src="../../resources/js/bootstrap.js"></script>
+<script src="../../resources/js/sessionCustomers.js"></script>
+</body>
+</html>

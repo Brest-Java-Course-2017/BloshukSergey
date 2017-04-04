@@ -66,7 +66,9 @@ public class CustomerClientImplTest {
     public void add() throws Exception {
         LOGGER.debug("mock test: add()");
 
-        expect(mockRestTemplate.postForEntity(url + urlCustomer + "/add", CUSTOMER_1, Integer.class))
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/add").toString();
+
+        expect(mockRestTemplate.postForEntity(httpRequest, CUSTOMER_1, Integer.class))
                 .andReturn(new ResponseEntity<Integer>(CUSTOMER_1.getCustomerId(), HttpStatus.CREATED));
         replay(mockRestTemplate);
 
@@ -80,14 +82,10 @@ public class CustomerClientImplTest {
     public void delete() throws Exception {
         LOGGER.debug("mock test: delete()");
 
-        expect(mockRestTemplate.exchange(
-                url + urlCustomer + "/delete?id={id}",
-                HttpMethod.DELETE,
-                null,
-                Integer.class,
-                CUSTOMER_1.getCustomerId()
-                )
-        ).andReturn(new ResponseEntity<Integer>(EXPECTED, HttpStatus.ACCEPTED));
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/delete?id={id}").toString();
+
+        expect(mockRestTemplate.exchange(httpRequest, HttpMethod.DELETE,null, Integer.class, CUSTOMER_1.getCustomerId()))
+                .andReturn(new ResponseEntity<Integer>(EXPECTED, HttpStatus.ACCEPTED));
         replay(mockRestTemplate);
 
         Integer quantity = customerClient.delete(CUSTOMER_1.getCustomerId());
@@ -100,9 +98,10 @@ public class CustomerClientImplTest {
     public void update() throws Exception {
         LOGGER.debug("mock test: update()");
 
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/update").toString();
+
         HttpEntity<Customer> entity = new HttpEntity<>(CUSTOMER_1);
-        expect(mockRestTemplate.exchange(url + urlCustomer + "/update",
-                HttpMethod.PUT, entity, Integer.class))
+        expect(mockRestTemplate.exchange(httpRequest, HttpMethod.PUT, entity, Integer.class))
                 .andReturn(new ResponseEntity<Integer>(EXPECTED, HttpStatus.ACCEPTED));
         replay(mockRestTemplate);
 
@@ -119,7 +118,9 @@ public class CustomerClientImplTest {
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER_1);
 
-        expect(mockRestTemplate.getForEntity(url + urlCustomer + "/getByName?name=" + CUSTOMER_1.getName(), List.class))
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/getByName?name={name}").toString();
+
+        expect(mockRestTemplate.getForEntity(httpRequest, List.class, CUSTOMER_1.getName()))
                 .andReturn(new ResponseEntity<List>(customers, HttpStatus.FOUND));
         replay(mockRestTemplate);
 
@@ -133,7 +134,9 @@ public class CustomerClientImplTest {
     public void getById() throws Exception {
         LOGGER.debug("mock test: getById()");
 
-        expect(mockRestTemplate.getForEntity(url + urlCustomer + "/getById?id=" + CUSTOMER_1.getCustomerId(), Customer.class))
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/getById?id={id}").toString();
+
+        expect(mockRestTemplate.getForEntity(httpRequest, Customer.class, CUSTOMER_1.getCustomerId()))
                 .andReturn(new ResponseEntity<Customer>(CUSTOMER_1, HttpStatus.FOUND));
         replay(mockRestTemplate);
 
@@ -150,6 +153,8 @@ public class CustomerClientImplTest {
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER_1);
         customers.add(CUSTOMER_2);
+
+        String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/getAll").toString();
 
         expect(mockRestTemplate.getForEntity(url + urlCustomer + "/getAll", List.class))
                 .andReturn(new ResponseEntity<List>(customers, HttpStatus.OK));

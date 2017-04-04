@@ -16,8 +16,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,8 +24,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.easymock.EasyMock.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,6 +45,8 @@ public class BookingControllerMockTest {
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
     private static final Integer EXPECTED = 1;
+
+    private static final String BOOKING_URL= "/booking";
 
     private MockMvc mockMvc;
 
@@ -83,13 +82,19 @@ public class BookingControllerMockTest {
     public void getCustomersBySessionId() throws Exception {
         LOGGER.debug("mock test: getCustomersBySessionId()");
 
+        String httpRequest = new StringBuffer()
+                .append(BOOKING_URL)
+                .append("/getCustomersBySessionId").toString();
+
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER_1);
 
         expect(bookingServiceMock.getCustomersBySessionId(SESSION_WITH_SEATS_1.getSessionId())).andReturn(customers);
         replay(bookingServiceMock);
 
-        mockMvc.perform(get("/booking/getCustomersBySessionId?id=1").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(httpRequest)
+                .param("id", SESSION_WITH_SEATS_1.getSessionId().toString())
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
 
@@ -97,13 +102,18 @@ public class BookingControllerMockTest {
     public void getSessionsWithSeats() throws Exception {
         LOGGER.debug("mock test: getSessionsWithSeats()");
 
+        String httpRequest = new StringBuffer().append(BOOKING_URL).append("/getSessionsWithSeats").toString();
+
         List<SessionWithSeats> sessions = new ArrayList<>();
         sessions.add(SESSION_WITH_SEATS_1);
 
         expect(bookingServiceMock.getSessionsWithSeats(FIRST_DATE, SECOND_DATE)).andReturn(sessions);
         replay(bookingServiceMock);
 
-        mockMvc.perform(get("/booking/getSessionsWithSeats?firstDate=2017-03-01&secondDate=2017-03-22").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(httpRequest)
+                .param("firstDate", SIMPLE_DATE_FORMAT.format(FIRST_DATE))
+                .param("secondDate", SIMPLE_DATE_FORMAT.format(SECOND_DATE))
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
 
@@ -111,11 +121,14 @@ public class BookingControllerMockTest {
     public void deleteBooking() throws Exception {
         LOGGER.debug("mock test: delete()");
 
+        String httpRequest = new StringBuffer().append(BOOKING_URL).append("/delete").toString();
+
         expect(bookingServiceMock.delete(SESSION_WITH_SEATS_1.getSessionId(), CUSTOMER_1.getCustomerId())).andReturn(EXPECTED);
         replay(bookingServiceMock);
 
-        mockMvc.perform(
-                delete("/booking/delete?sessionId=1&customerId=1")
+        mockMvc.perform(delete(httpRequest)
+                        .param("sessionId", SESSION_WITH_SEATS_1.getSessionId().toString())
+                        .param("customerId", CUSTOMER_1.getCustomerId().toString())
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(print())
                 .andExpect(status().isOk())
@@ -126,15 +139,15 @@ public class BookingControllerMockTest {
     public void add() throws Exception {
         LOGGER.debug("mock test: add()");
 
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/booking/add");
-        request.accept(MediaType.APPLICATION_JSON);
-        request.param("sessionId", SESSION_WITH_SEATS_1.getSessionId().toString());
-        request.param("customerId", CUSTOMER_1.getCustomerId().toString());
+        String httpRequest = new StringBuffer().append(BOOKING_URL).append("/add").toString();
 
         expect(bookingServiceMock.add(SESSION_WITH_SEATS_1.getSessionId(), CUSTOMER_1.getCustomerId())).andReturn(EXPECTED);
         replay(bookingServiceMock);
 
-        mockMvc.perform(request)
+        mockMvc.perform(post(httpRequest)
+                        .param("sessionId", SESSION_WITH_SEATS_1.getSessionId().toString())
+                        .param("customerId", CUSTOMER_1.getCustomerId().toString())
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().string(EXPECTED.toString()));

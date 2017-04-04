@@ -36,10 +36,8 @@ public class SessionClientImpl implements SessionClient, InitializingBean {
     public Integer add(Session session) throws ServerDataAccessException {
         LOGGER.debug("add({})", session);
 
-        ResponseEntity responseEntity = restTemplate.postForEntity(
-                url + urlSession + "/add",
-                session,
-                Integer.class);
+        String httpRequest = new StringBuffer().append(url).append(urlSession).append("/add").toString();
+        ResponseEntity responseEntity = restTemplate.postForEntity(httpRequest, session, Integer.class);
         Integer sessionId = (Integer) responseEntity.getBody();
 
         return sessionId;
@@ -49,12 +47,8 @@ public class SessionClientImpl implements SessionClient, InitializingBean {
     public Integer delete(Integer id) throws ServerDataAccessException {
         LOGGER.debug("delete({})", id);
 
-        ResponseEntity<Integer> response= restTemplate.exchange(
-                url + urlSession + "/delete?id={id}",
-                HttpMethod.DELETE,
-                null,
-                Integer.class,
-                id);
+        String httpRequest = new StringBuffer().append(url).append(urlSession).append("/delete?id={id}").toString();
+        ResponseEntity<Integer> response= restTemplate.exchange(httpRequest, HttpMethod.DELETE,null, Integer.class, id);
         Integer quantity = response.getBody();
 
         return quantity;
@@ -64,12 +58,9 @@ public class SessionClientImpl implements SessionClient, InitializingBean {
     public Integer update(Session session) throws ServerDataAccessException {
         LOGGER.debug("update({})", session);
 
+        String httpRequest = new StringBuffer().append(url).append(urlSession).append("/update").toString();
         HttpEntity<Session> entity = new HttpEntity<>(session);
-        ResponseEntity<Integer> response= restTemplate.exchange(
-                url + urlSession + "/update",
-                HttpMethod.PUT,
-                entity,
-                Integer.class);
+        ResponseEntity<Integer> response= restTemplate.exchange(httpRequest, HttpMethod.PUT, entity, Integer.class);
         Integer quantity = response.getBody();
 
         return quantity;
@@ -79,7 +70,8 @@ public class SessionClientImpl implements SessionClient, InitializingBean {
     public Session getById(Integer id) throws ServerDataAccessException {
         LOGGER.debug("getById({})", id);
 
-        ResponseEntity responseEntity = restTemplate.getForEntity(url + urlSession + "/getById?id=" + id, Session.class);
+        String httpRequest = new StringBuffer().append(url).append(urlSession).append("/getById?id={id}").toString();
+        ResponseEntity responseEntity = restTemplate.getForEntity(httpRequest, Session.class, id);
         Session sessions = (Session) responseEntity.getBody();
 
         return sessions;
@@ -89,7 +81,8 @@ public class SessionClientImpl implements SessionClient, InitializingBean {
     public List<Session> getAll() throws ServerDataAccessException {
         LOGGER.debug("getAll()");
 
-        ResponseEntity responseEntity = restTemplate.getForEntity(url + urlSession + "/getAll", List.class);
+        String httpRequest = new StringBuffer().append(url).append(urlSession).append("/getAll").toString();
+        ResponseEntity responseEntity = restTemplate.getForEntity(httpRequest, List.class);
         List<Session> sessions = (List<Session>) responseEntity.getBody();
 
         return sessions;

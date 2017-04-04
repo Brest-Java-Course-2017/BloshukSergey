@@ -10,15 +10,12 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Component
 @PropertySource("classpath:url.properties")
@@ -27,13 +24,15 @@ public class BookingClientImpl implements BookingClient, InitializingBean {
     @Value("${rest.protocol}://${rest.host}:${rest.port}")
     private String url;
 
-    @Value("${rest.customer}")
+    @Value("${rest.booking}")
     private String urlBooking;
 
     @Autowired
     private RestTemplate restTemplate;
 
     private static final Logger LOGGER = LogManager.getLogger(BookingClientImpl.class);
+
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
     @Override
     public List<Customer> getCustomersBySessionId(Integer id) throws ServerDataAccessException {
@@ -42,7 +41,7 @@ public class BookingClientImpl implements BookingClient, InitializingBean {
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)
-                .append("/getCustomersBySessionId").toString();
+                .append("/getCustomersBySessionId?id={id}").toString();
 
         Map data = new HashMap<String, Integer>();
         data.put("id", id);
@@ -57,16 +56,17 @@ public class BookingClientImpl implements BookingClient, InitializingBean {
     public List<SessionWithSeats> getSessionsWithSeats(Date firstDate, Date secondDate) throws ServerDataAccessException {
         LOGGER.debug("getSessionsWithSeats({}, {})", firstDate, secondDate);
 
-        String httpRequest = new StringBuffer()
+        StringBuffer httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)
-                .append("/getSessionsWithSeats").toString();
+                .append("/getSessionsWithSeats");
 
-        Map data = new HashMap<String, Date>();
-        data.put("firstDate", firstDate);
-        data.put("secondDate", secondDate);
+        if(firstDate != null && secondDate != null) {
+            httpRequest.append("?firstDate=").append(SIMPLE_DATE_FORMAT.format(firstDate));
+            httpRequest.append("&secondDate=").append(SIMPLE_DATE_FORMAT.format(secondDate));
+        }
 
-        ResponseEntity responseEntity = restTemplate.getForEntity(httpRequest, List.class, data);
+        ResponseEntity responseEntity = restTemplate.getForEntity(httpRequest.toString(), List.class);
         List<SessionWithSeats> sessions = (List<SessionWithSeats>) responseEntity.getBody();
 
         return sessions;
@@ -79,7 +79,7 @@ public class BookingClientImpl implements BookingClient, InitializingBean {
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)
-                .append("/delete").toString();
+                .append("/delete?sessionId={sessionId}&customerId={customerId}").toString();
 
         Map data = new HashMap<String, Integer>();
         data.put("sessionId", sessionId);
@@ -93,12 +93,12 @@ public class BookingClientImpl implements BookingClient, InitializingBean {
 
     @Override
     public Integer add(Integer sessionId, Integer customerId) throws ServerDataAccessException {
-        LOGGER.debug("addCustomer({}, {})", sessionId, customerId);
+        LOGGER.debug("add({}, {})", sessionId, customerId);
 
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)
-                .append("/add").toString();
+                .append("/add?sessionId={sessionId}&customerId={customerId}").toString();
 
         Map data = new HashMap<String, Integer>();
         data.put("sessionId", sessionId);

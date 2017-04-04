@@ -8,18 +8,23 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>web</artifactId>
   <packaging>war</packaging>
-  <artifactId>rest</artifactId>
 
   <dependencies>
     <!--Project-->
     <dependency>
       <groupId>com.cinema</groupId>
-      <artifactId>service</artifactId>
+      <artifactId>model</artifactId>
     </dependency>
     <dependency>
       <groupId>com.cinema</groupId>
-      <artifactId>test-db</artifactId>
+      <artifactId>client-rest</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.cinema</groupId>
+      <artifactId>client-api</artifactId>
     </dependency>
 
     <!--Spring-->
@@ -39,21 +44,19 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
     </dependency>
-
-    <!--Json-->
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
     </dependency>
 
-    <!--Tests-->
+    <!--Thymeleaf-->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf-spring4</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.easymock</groupId>
-      <artifactId>easymock</artifactId>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
     </dependency>
 
     <!--Log4j2-->
@@ -79,6 +82,22 @@
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
     </dependency>
+
+    <!--Test-->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymock</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+    </dependency>
+
+
   </dependencies>
 
   <build>
@@ -92,12 +111,13 @@
             <contextPath>/</contextPath>
           </webApp>
           <httpConnector>
-            <port>8088</port>
+            <port>8080</port>
           </httpConnector>
         </configuration>
       </plugin>
 
     </plugins>
   </build>
+
 
 </project>

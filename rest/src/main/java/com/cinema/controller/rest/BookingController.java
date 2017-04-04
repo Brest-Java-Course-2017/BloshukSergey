@@ -39,8 +39,8 @@ public class BookingController {
     @RequestMapping(value = "/getSessionsWithSeats", method = RequestMethod.GET)
     @ResponseBody
     public List<SessionWithSeats> getSessionsWithSeats(
-            @RequestParam(value = "firstDate", required = false) Date firstDate,
-            @RequestParam(value = "secondDate", required = false) Date secondDate) throws ParseException {
+            @RequestParam(value = "firstDate", required = false)  Date firstDate,
+            @RequestParam(value = "secondDate", required = false)  Date secondDate) throws ParseException {
         LOGGER.debug("rest: getSessionsWithSeats({}, {})", firstDate, secondDate);
 
         List<SessionWithSeats> sessions = sessions = bookingService.getSessionsWithSeats(firstDate, secondDate);

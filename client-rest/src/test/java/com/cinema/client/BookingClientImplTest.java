@@ -12,9 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
@@ -34,7 +32,7 @@ public class BookingClientImplTest {
     @Value("${rest.protocol}://${rest.host}:${rest.port}")
     private String url;
 
-    @Value("${rest.customer}")
+    @Value("${rest.booking}")
     private String urlBooking;
 
     @Autowired
@@ -83,7 +81,7 @@ public class BookingClientImplTest {
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)
-                .append("/getCustomersBySessionId").toString();
+                .append("/getCustomersBySessionId?id={id}").toString();
 
         Map data = new HashMap<String, Date>();
         data.put("id", SESSION_WITH_SEATS.getSessionId());
@@ -95,7 +93,33 @@ public class BookingClientImplTest {
         List<Customer> result = bookingClient.getCustomersBySessionId(SESSION_WITH_SEATS.getSessionId());
 
         assertNotNull("Customer must be not null", result);
-        assertEquals("Lists size", customers.size(), result.size());
+        assertEquals("List size", customers.size(), result.size());
+    }
+
+    @Test
+    public void getSessionsWithSeatsDateToDate() throws Exception {
+        LOGGER.debug("mock test: getSessionsWithSeatsDateToDate()");
+
+        List<SessionWithSeats> sessions = new ArrayList<>();
+        sessions.add(SESSION_WITH_SEATS);
+
+        String httpRequest = new StringBuffer()
+                .append(url)
+                .append(urlBooking)
+                .append("/getSessionsWithSeats")
+                .append("?firstDate=").append(SIMPLE_DATE_FORMAT.format(FIRST_DATE))
+                .append("&secondDate=").append(SIMPLE_DATE_FORMAT.format(SECOND_DATE))
+                .toString();
+
+        expect(mockRestTemplate.getForEntity(httpRequest, List.class))
+                .andReturn(new ResponseEntity<List>(sessions, HttpStatus.OK));
+
+        replay(mockRestTemplate);
+
+        List<SessionWithSeats> result = bookingClient.getSessionsWithSeats(FIRST_DATE, SECOND_DATE);
+
+        assertNotNull("Result must be not null", result);
+        assertEquals("Lists size", sessions.size(), result.size());
     }
 
     @Test
@@ -110,15 +134,11 @@ public class BookingClientImplTest {
                 .append(urlBooking)
                 .append("/getSessionsWithSeats").toString();
 
-        Map data = new HashMap<String, Date>();
-        data.put("firstDate", FIRST_DATE);
-        data.put("secondDate", SECOND_DATE);
-
-        expect(mockRestTemplate.getForEntity(httpRequest, List.class, data))
+        expect(mockRestTemplate.getForEntity(httpRequest, List.class))
                 .andReturn(new ResponseEntity<List>(sessions, HttpStatus.OK));
         replay(mockRestTemplate);
 
-        List<SessionWithSeats> result = bookingClient.getSessionsWithSeats(FIRST_DATE, SECOND_DATE);
+        List<SessionWithSeats> result = bookingClient.getSessionsWithSeats(null, null);
 
         assertNotNull("Result must be not null", result);
         assertEquals("Lists size", sessions.size(), result.size());
@@ -131,7 +151,7 @@ public class BookingClientImplTest {
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)
-                .append("/delete").toString();
+                .append("/delete?sessionId={sessionId}&customerId={customerId}").toString();
 
         Map data = new HashMap<String, Integer>();
         data.put("sessionId", SESSION_WITH_SEATS.getSessionId());
@@ -154,7 +174,7 @@ public class BookingClientImplTest {
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)
-                .append("/add").toString();
+                .append("/add?sessionId={sessionId}&customerId={customerId}").toString();
 
         Map data = new HashMap<String, Integer>();
         data.put("sessionId", SESSION_WITH_SEATS.getSessionId());
