@@ -3,8 +3,6 @@ package com.cinema.service;
 import com.cinema.configuration.SpringServiceMockTestConfiguration;
 import com.cinema.dao.SessionDao;
 import com.cinema.model.Session;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +17,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.easymock.EasyMock.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=SpringServiceMockTestConfiguration.class)
@@ -34,8 +30,6 @@ public class SessionServiceImplMockTest {
     private static final Integer EXPECTED = 1;
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-
-    private static final Logger LOGGER = LogManager.getLogger(SessionServiceImplMockTest.class);
 
     @Autowired
     private SessionService sessionService;
@@ -59,8 +53,6 @@ public class SessionServiceImplMockTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("mock test: add()");
-
         expect(sessionDaoMock.add(SESSION_1)).andReturn(SESSION_1.getSessionId());
         replay(sessionDaoMock);
 
@@ -72,8 +64,6 @@ public class SessionServiceImplMockTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("mock test: delete()");
-
         expect(sessionDaoMock.delete(SESSION_1.getSessionId())).andReturn(EXPECTED);
         replay(sessionDaoMock);
 
@@ -85,8 +75,6 @@ public class SessionServiceImplMockTest {
 
     @Test
     public void update() throws Exception {
-        LOGGER.debug("mock test: update()");
-
         expect(sessionDaoMock.update(SESSION_1)).andReturn(EXPECTED);
         replay(sessionDaoMock);
 
@@ -98,8 +86,6 @@ public class SessionServiceImplMockTest {
 
     @Test
     public void getById() throws Exception {
-        LOGGER.debug("mock test: getById()");
-
         expect(sessionDaoMock.getById(SESSION_1.getSessionId())).andReturn(SESSION_1);
         replay(sessionDaoMock);
 
@@ -111,8 +97,6 @@ public class SessionServiceImplMockTest {
 
     @Test
     public void getAll() throws Exception {
-        LOGGER.debug("mock test: getAll()");
-
         List<Session> expectSessions = new ArrayList<Session>();
         expectSessions.add(SESSION_1);
         expectSessions.add(SESSION_2);

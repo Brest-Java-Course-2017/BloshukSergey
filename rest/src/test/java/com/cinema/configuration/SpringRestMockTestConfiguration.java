@@ -7,9 +7,11 @@ import org.easymock.EasyMock;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
-@ComponentScan("com.cinema.controller.rest")
+@EnableAspectJAutoProxy
+@ComponentScan({"com.cinema.controller.rest", "com.cinema.aop.aspect"})
 public class SpringRestMockTestConfiguration {
 
     @Bean

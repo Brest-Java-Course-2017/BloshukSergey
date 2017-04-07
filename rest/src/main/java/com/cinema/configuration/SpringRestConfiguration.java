@@ -2,10 +2,7 @@ package com.cinema.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -18,12 +15,14 @@ import java.util.Arrays;
 import java.util.List;
 
 @EnableWebMvc
+@EnableAspectJAutoProxy
 @Configuration
 @Import({SpringJDBCConfiguration.class})
 @ComponentScan({
         "com.cinema.dao",
         "com.cinema.service",
-        "com.cinema.controller.rest"})
+        "com.cinema.controller.rest",
+        "com.cinema.aop.aspect"})
 public class SpringRestConfiguration {
     @Bean
     public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer(){
@@ -62,15 +61,4 @@ public class SpringRestConfiguration {
         return requestMappingHandlerAdapter;
     }
 
-/*    @Bean
-    public View jsonTemplate() {
-        MappingJackson2JsonView view = new MappingJackson2JsonView();
-        view.setPrettyPrint(true);
-        return view;
-    }
-
-    @Bean
-    public ViewResolver viewResolver() {
-        return new BeanNameViewResolver();
-    }*/
 }

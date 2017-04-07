@@ -1,14 +1,12 @@
 package com.cinema.configuration;
 
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration
-@ComponentScan("com.cinema.dao")
+@EnableAspectJAutoProxy
+@ComponentScan({"com.cinema.dao", "com.cinema.aop.aspect"})
 @Import({SpringJDBCConfiguration.class})
 public class SpringDaoTestConfiguration {
 

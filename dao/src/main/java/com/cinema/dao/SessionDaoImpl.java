@@ -1,8 +1,7 @@
 package com.cinema.dao;
 
+import com.cinema.aop.annotation.Loggable;
 import com.cinema.model.Session;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +47,6 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
 
     private static final String TOTAL_SEATS = "totalSeats";
 
-    private static final Logger LOGGER = LogManager.getLogger(SessionDaoImpl.class);
-
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
@@ -65,8 +62,8 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer add(Session session)  throws DataAccessException {
-        LOGGER.debug("addSession({})", session);
 
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(session);
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -76,8 +73,8 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer delete(Integer id) throws DataAccessException {
-        LOGGER.debug("deleteSession({})", id);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, id);
         Integer quantity = namedParameterJdbcTemplate.update(SQL_DELETE, parameterSource);
@@ -86,8 +83,8 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer update(Session session) throws DataAccessException {
-        LOGGER.debug("update({})", session);
 
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(session);
         Integer rows = namedParameterJdbcTemplate.update(SQL_UPDATE, parameterSource);
@@ -96,8 +93,8 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Session getById(Integer id) throws DataAccessException {
-        LOGGER.debug("getById({})", id);
 
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, id);
         Session session = namedParameterJdbcTemplate.queryForObject(
@@ -109,9 +106,8 @@ public class SessionDaoImpl implements SessionDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public List<Session> getAll() throws DataAccessException {
-        LOGGER.debug("test: getAll()");
-
         List<Session> sessions = namedParameterJdbcTemplate.query(SQL_GET_ALL, new SessionRowMapper());
 
         return sessions;

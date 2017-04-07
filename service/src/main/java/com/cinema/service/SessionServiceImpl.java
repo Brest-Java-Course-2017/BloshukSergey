@@ -1,9 +1,8 @@
 package com.cinema.service;
 
+import com.cinema.aop.annotation.Loggable;
 import com.cinema.dao.SessionDao;
 import com.cinema.model.Session;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +18,12 @@ import static org.springframework.util.Assert.*;
 @Transactional
 public class SessionServiceImpl implements SessionService, InitializingBean {
 
-    private static final Logger LOGGER = LogManager.getLogger(SessionServiceImpl.class);
-
     @Autowired
     private SessionDao sessionDao;
 
     @Override
+    @Loggable
     public Integer add(Session session) throws DataAccessException {
-        LOGGER.debug("add({})", session);
-
         notNull(session, "session must not be null");
         hasText(session.getMovieName(), "session must be had movie name");
         notNull(session.getSessionDate(), "session's movie name must not be null" );
@@ -38,9 +34,8 @@ public class SessionServiceImpl implements SessionService, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer delete(Integer id) throws DataAccessException {
-        LOGGER.debug("delete({})", id);
-
         notNull(id, "sessionId must not be null");
         isTrue(id > 0, "sessionId must be greater than zero");
 
@@ -50,9 +45,8 @@ public class SessionServiceImpl implements SessionService, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer update(Session session) throws DataAccessException {
-        LOGGER.debug("update({})", session);
-
         notNull(session, "session must not be null");
         hasText(session.getMovieName(), "session must be had movie name");
         notNull(session.getSessionDate(), "session's movie name must not be null" );
@@ -63,9 +57,8 @@ public class SessionServiceImpl implements SessionService, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Session getById(Integer id) throws DataAccessException {
-        LOGGER.debug("getById({})", id);
-
         notNull(id, "sessionId must not be null");
         isTrue(id > 0, "sessionId must be greater than 0");
 
@@ -75,9 +68,8 @@ public class SessionServiceImpl implements SessionService, InitializingBean {
     }
 
     @Override
+    @Loggable
     public List<Session> getAll() throws DataAccessException {
-        LOGGER.debug("getAll()");
-
         List<Session> sessions = sessionDao.getAll();
 
         return sessions;

@@ -4,8 +4,6 @@ import com.cinema.client.SessionClient;
 import com.cinema.configuration.SpringWebMockTestConfiguration;
 import com.cinema.model.Session;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +22,7 @@ import static org.easymock.EasyMock.*;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -54,8 +50,6 @@ public class SessionControllerTest {
 
     private MockMvc mockMvc;
 
-    private static final Logger LOGGER = LogManager.getLogger(SessionControllerTest.class);
-
     @Autowired
     private SessionClient sessionClientMock;
 
@@ -81,8 +75,6 @@ public class SessionControllerTest {
 
     @Test
     public void getAll() throws Exception {
-        LOGGER.debug("test: getAll()");
-
         replay(sessionClientMock);
 
         StringBuffer httpRequest = new StringBuffer().append(REDIRECT).append(BOOKING_URL).append("/getSessionsWithSeats");
@@ -94,8 +86,6 @@ public class SessionControllerTest {
 
     @Test
     public void getAllDateToDate() throws Exception {
-        LOGGER.debug("test: getAll()");
-
         replay(sessionClientMock);
 
         StringBuffer httpRequest = new StringBuffer().append(REDIRECT).append(BOOKING_URL).append("/getSessionsWithSeats");
@@ -115,8 +105,6 @@ public class SessionControllerTest {
 
     @Test
     public void deleteSession() throws Exception {
-        LOGGER.debug("test: deleteSession()");
-
         expect(sessionClientMock.delete(SESSION.getSessionId())).andReturn(EXPECTED);
         replay(sessionClientMock);
 
@@ -127,8 +115,6 @@ public class SessionControllerTest {
 
     @Test
     public void sessionView() throws Exception {
-        LOGGER.debug("test: sessionView()");
-
         expect(sessionClientMock.getById(SESSION.getSessionId())).andReturn(SESSION);
         replay(sessionClientMock);
 
@@ -140,8 +126,6 @@ public class SessionControllerTest {
 
     @Test
     public void updateSession() throws Exception {
-        LOGGER.debug("test: update()");
-
         expect(sessionClientMock.update(SESSION)).andReturn(EXPECTED);
         replay(sessionClientMock);
 
@@ -154,8 +138,6 @@ public class SessionControllerTest {
 
     @Test
     public void addSession() throws Exception {
-        LOGGER.debug("test: add()");
-
         expect(sessionClientMock.add(SESSION)).andReturn(EXPECTED);
         replay(sessionClientMock);
 

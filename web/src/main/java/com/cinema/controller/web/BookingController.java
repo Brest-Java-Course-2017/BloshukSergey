@@ -1,10 +1,9 @@
 package com.cinema.controller.web;
 
+import com.cinema.aop.annotation.Loggable;
 import com.cinema.client.BookingClient;
 import com.cinema.model.Customer;
 import com.cinema.model.SessionWithSeats;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,6 @@ import java.util.List;
 @RequestMapping(value = "/booking")
 public class BookingController implements InitializingBean {
 
-    private static final Logger LOGGER = LogManager.getLogger(SessionController.class);
-
     public static final String SESSIONS = "sessions";
     public static final String SESSION_CUSTOMERS = "sessionCustomers";
     public static final String REDIRECT_BOOKING_ID = "redirect:/booking?id=";
@@ -31,6 +28,7 @@ public class BookingController implements InitializingBean {
     @Autowired
     private BookingClient bookingClient;
 
+    @Loggable
     @RequestMapping(path = "/getSessionsWithSeats")
     public String getSessionsWithSeats(
                          @RequestParam(value = "firstDate", required = false)
@@ -38,18 +36,15 @@ public class BookingController implements InitializingBean {
                          @RequestParam(value = "secondDate", required = false)
                          @DateTimeFormat(pattern = "yyyy-MM-dd") Date secondDate,
                          Model model){
-        LOGGER.debug("web: getSessionsWithSeats({}, {})", firstDate, secondDate);
-
         List<SessionWithSeats> sessions = bookingClient.getSessionsWithSeats(firstDate, secondDate);
         model.addAttribute("sessionList", sessions);
 
         return SESSIONS;
     }
 
+    @Loggable
     @RequestMapping
     public String getCustomersBySessionId(@RequestParam(value = "id") Integer id, Model model) {
-        LOGGER.debug("web: getSessionCustomers({})", id);
-
         List<Customer> customers = bookingClient.getCustomersBySessionId(id);
         model.addAttribute("customerList", customers);
         model.addAttribute("sessionId", id);
@@ -57,19 +52,17 @@ public class BookingController implements InitializingBean {
         return SESSION_CUSTOMERS;
     }
 
+    @Loggable
     @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
     public String delete(@RequestParam(value = "sessionId") Integer sessionId, @RequestParam(value = "customerId") Integer customerId) {
-        LOGGER.debug("web: delete({}, {})", sessionId, customerId);
-
         bookingClient.delete(sessionId, customerId);
 
         return REDIRECT_BOOKING_ID + sessionId;
     }
 
+    @Loggable
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     public String add(@RequestParam(value = "sessionId") Integer sessionId, @RequestParam(value = "customerId") Integer customerId) {
-        LOGGER.debug("web: add({}, {})", sessionId, customerId);
-
         bookingClient.add(sessionId, customerId);
 
         return REDIRECT_BOOKING_ID + sessionId;

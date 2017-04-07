@@ -4,8 +4,6 @@ import com.cinema.client.BookingClient;
 import com.cinema.configuration.SpringWebMockTestConfiguration;
 import com.cinema.model.Customer;
 import com.cinema.model.SessionWithSeats;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,12 +46,12 @@ public class BookingControllerTest {
     private static final Integer EXPECTED = 1;
 
     public static final String SESSIONS = "sessions";
+
     public static final String SESSION_CUSTOMERS = "sessionCustomers";
+
     public static final String REDIRECT_BOOKING_ID = "redirect:/booking?id=";
 
     private MockMvc mockMvc;
-
-    private static final Logger LOGGER = LogManager.getLogger(BookingControllerTest.class);
 
     @Autowired
     private BookingClient bookingClientMock;
@@ -82,8 +80,6 @@ public class BookingControllerTest {
 
     @Test
     public void getSessionsWithSeats() throws Exception {
-        LOGGER.debug("test: getSessionsWithSeats()");
-
         List<SessionWithSeats> sessions = new ArrayList<>();
         sessions.add(SESSION_WITH_SEATS);
 
@@ -102,8 +98,6 @@ public class BookingControllerTest {
 
     @Test
     public void getCustomersBySessionId() throws Exception {
-        LOGGER.debug("test: getCustomersBySessionId()");
-
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER);
 
@@ -120,8 +114,6 @@ public class BookingControllerTest {
 
     @Test
     public void deleteBooking() throws Exception {
-        LOGGER.debug("test: delete()");
-
         expect(bookingClientMock.delete(SESSION_WITH_SEATS.getSessionId(), CUSTOMER.getCustomerId())).andReturn(EXPECTED);
         replay(bookingClientMock);
 
@@ -136,8 +128,6 @@ public class BookingControllerTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("test: add()");
-
         expect(bookingClientMock.add(SESSION_WITH_SEATS.getSessionId(), CUSTOMER.getCustomerId())).andReturn(EXPECTED);
         replay(bookingClientMock);
 

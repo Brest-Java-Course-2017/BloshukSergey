@@ -2,8 +2,6 @@ package com.cinema.dao;
 
 import com.cinema.configuration.SpringDaoTestConfiguration;
 import com.cinema.model.Customer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=SpringDaoTestConfiguration.class)
@@ -30,15 +26,11 @@ public class CustomerDaoImplTest {
 
     private static final Integer EXPECTED = 1;
 
-    private static final Logger LOGGER = LogManager.getLogger(CustomerDaoImplTest.class);
-
     @Autowired
     private CustomerDao customerDao;
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("test: addCustomer({})", ADD_CUSTOMER);
-
         Integer customerId = customerDao.add(ADD_CUSTOMER);
 
         assertNotNull("Customer id must be not null", customerId);
@@ -51,8 +43,6 @@ public class CustomerDaoImplTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("test: delete({})", EXIST_CUSTOMER);
-
         Integer quantity = customerDao.delete(EXIST_CUSTOMER.getCustomerId());
 
         assertNotNull("Quantity of delete customers must be not null", quantity);
@@ -61,8 +51,6 @@ public class CustomerDaoImplTest {
 
     @Test
     public void update() throws Exception {
-        LOGGER.debug("test: updateCustomer(from {} to {})", UPDATE_CUSTOMER, EXIST_CUSTOMER);
-
         Integer quantity = customerDao.update(UPDATE_CUSTOMER);
 
         assertNotNull(quantity);
@@ -71,8 +59,6 @@ public class CustomerDaoImplTest {
 
     @Test
     public void getByName() throws Exception {
-        LOGGER.debug("test: getByName({})", EXIST_CUSTOMER.getName());
-
         List<Customer> customers = customerDao.getByName(EXIST_CUSTOMER.getName());
 
         assertNotNull("Customer must be not null", customers);
@@ -81,8 +67,6 @@ public class CustomerDaoImplTest {
 
     @Test
     public void getById() throws Exception {
-        LOGGER.debug("test: getById({})", EXIST_CUSTOMER.getCustomerId());
-
         Customer customer = customerDao.getById(EXIST_CUSTOMER.getCustomerId());
 
         assertNotNull("Customer must be not null", customer);
@@ -91,8 +75,6 @@ public class CustomerDaoImplTest {
 
     @Test
     public void getAll() throws Exception {
-        LOGGER.debug("test: getAll()");
-
         List<Customer> customers = customerDao.getAll();
 
         assertNotNull("Customers must be not null", customers);

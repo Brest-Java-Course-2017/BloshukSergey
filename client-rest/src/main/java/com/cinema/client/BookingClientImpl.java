@@ -1,16 +1,16 @@
 package com.cinema.client;
 
+import com.cinema.aop.annotation.Loggable;
 import com.cinema.client.exception.ServerDataAccessException;
 import com.cinema.model.Customer;
 import com.cinema.model.SessionWithSeats;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.*;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,14 +30,11 @@ public class BookingClientImpl implements BookingClient, InitializingBean {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final Logger LOGGER = LogManager.getLogger(BookingClientImpl.class);
-
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
+    @Loggable
     @Override
     public List<Customer> getCustomersBySessionId(Integer id) throws ServerDataAccessException {
-        LOGGER.debug("getCustomersBySessionId({})", id);
-
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)
@@ -52,14 +49,10 @@ public class BookingClientImpl implements BookingClient, InitializingBean {
         return customers;
     }
 
+    @Loggable
     @Override
     public List<SessionWithSeats> getSessionsWithSeats(Date firstDate, Date secondDate) throws ServerDataAccessException {
-        LOGGER.debug("getSessionsWithSeats({}, {})", firstDate, secondDate);
-
-        StringBuffer httpRequest = new StringBuffer()
-                .append(url)
-                .append(urlBooking)
-                .append("/getSessionsWithSeats");
+        StringBuffer httpRequest = new StringBuffer().append(url).append(urlBooking).append("/getSessionsWithSeats");
 
         if(firstDate != null && secondDate != null) {
             httpRequest.append("?firstDate=").append(SIMPLE_DATE_FORMAT.format(firstDate));
@@ -72,10 +65,9 @@ public class BookingClientImpl implements BookingClient, InitializingBean {
         return sessions;
     }
 
+    @Loggable
     @Override
     public Integer delete(Integer sessionId, Integer customerId) throws ServerDataAccessException {
-        LOGGER.debug("delete({}, {})", sessionId, customerId);
-
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)
@@ -91,10 +83,9 @@ public class BookingClientImpl implements BookingClient, InitializingBean {
         return quantity;
     }
 
+    @Loggable
     @Override
     public Integer add(Integer sessionId, Integer customerId) throws ServerDataAccessException {
-        LOGGER.debug("add({}, {})", sessionId, customerId);
-
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)

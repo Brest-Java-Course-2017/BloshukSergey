@@ -1,9 +1,8 @@
 package com.cinema.dao;
 
+import com.cinema.aop.annotation.Loggable;
 import com.cinema.model.Customer;
 import com.cinema.model.SessionWithSeats;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +57,6 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
 
     private static final String SECOND_DATE = "secondDate";
 
-    private static final Logger LOGGER = LogManager.getLogger(SessionDaoImpl.class);
-
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
@@ -68,6 +65,7 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public void afterPropertiesSet() throws Exception {
         if (namedParameterJdbcTemplate == null) {
             throw new BeanCreationException("NamedParameterJdbcTemplate is null");
@@ -75,9 +73,8 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public List<Customer> getCustomersBySessionId(Integer id) throws DataAccessException {
-        LOGGER.debug("getCustomersBySessionId({})", id);
-
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, id);
         List<Customer> customers = namedParameterJdbcTemplate.query(SQL_GET_CUSTOMERS_BY_SESSION_ID, parameterSource, new CustomerRowMapper());
 
@@ -85,9 +82,8 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public List<SessionWithSeats> getSessionsWithSeats(Date firstDate, Date secondDate) throws DataAccessException {
-        LOGGER.debug("test: getSessionWithSeats()");
-
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue(FIRST_DATE, firstDate)
                 .addValue(SECOND_DATE, secondDate);
@@ -100,9 +96,8 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer delete(Integer sessionId, Integer customerId)  throws DataAccessException {
-        LOGGER.debug("delete({}, {})", sessionId, customerId);
-
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, sessionId)
                 .addValue(CUSTOMER_ID, customerId);
         Integer quantity = namedParameterJdbcTemplate.update(SQL_DELETE, parameterSource);
@@ -111,9 +106,8 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer add(Integer sessionId, Integer customerId) throws DataAccessException {
-        LOGGER.debug("add({}, {})", sessionId, customerId);
-
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, sessionId)
                 .addValue(CUSTOMER_ID, customerId);
         Integer id = namedParameterJdbcTemplate.update(SQL_ADD, parameterSource);
@@ -122,9 +116,8 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer getSeatsBySessionId(Integer id) throws DataAccessException {
-        LOGGER.debug("getSeatsBySessionId({})", id);
-
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, id);
         Integer seats = namedParameterJdbcTemplate.queryForObject(SQL_GET_SEATS_BY_SESSION_ID, parameterSource, Integer.class);
 
@@ -132,9 +125,8 @@ public class BookingDaoImpl implements BookingDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Boolean checkUpBooking(Integer sessionId, Integer customerId) {
-        LOGGER.debug("checkUpBooking({}, {})", sessionId, customerId);
-
         SqlParameterSource parameterSource = new MapSqlParameterSource(SESSION_ID, sessionId).addValue(CUSTOMER_ID, customerId);
         Integer count = namedParameterJdbcTemplate.queryForObject(SQL_GET_COUNT_BY_IDS, parameterSource, Integer.class);
 

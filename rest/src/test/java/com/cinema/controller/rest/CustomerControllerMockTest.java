@@ -4,8 +4,6 @@ import com.cinema.configuration.SpringRestMockTestConfiguration;
 import com.cinema.model.Customer;
 import com.cinema.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +21,9 @@ import java.util.List;
 import static org.easymock.EasyMock.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringRestMockTestConfiguration.class)
@@ -56,8 +55,6 @@ public class CustomerControllerMockTest {
     @Autowired
     private CustomerController customerController;
 
-    private static final Logger LOGGER = LogManager.getLogger(CustomerControllerMockTest.class);
-
     @After
     public void clean() {
         verify(customerServiceMock);
@@ -73,8 +70,6 @@ public class CustomerControllerMockTest {
 
     @Test
     public void getAll() throws Exception {
-        LOGGER.debug("mock test: getAll()");
-
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER_1);
         customers.add(CUSTOMER_2);
@@ -88,8 +83,6 @@ public class CustomerControllerMockTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("mock test: add()");
-
         expect(customerServiceMock.add(CUSTOMER_1)).andReturn(CUSTOMER_1.getCustomerId());
         replay(customerServiceMock);
 
@@ -106,14 +99,13 @@ public class CustomerControllerMockTest {
 
     @Test
     public void deleteCustomer() throws Exception {
-        LOGGER.debug("mock test: delete()");
-
         expect(customerServiceMock.delete(CUSTOMER_1.getCustomerId())).andReturn(EXPECTED);
         replay(customerServiceMock);
 
         mockMvc.perform(
                 delete(CUSTOMER_DELETE_ID_1)
                         .accept(MediaType.APPLICATION_JSON)
+
         ).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(EXPECTED.toString()));
@@ -121,8 +113,6 @@ public class CustomerControllerMockTest {
 
     @Test
     public void update() throws Exception {
-        LOGGER.debug("mock test: update()");
-
         expect(customerServiceMock.update(CUSTOMER_1)).andReturn(EXPECTED);
         replay(customerServiceMock);
 
@@ -139,8 +129,6 @@ public class CustomerControllerMockTest {
 
     @Test
     public void getById() throws Exception {
-        LOGGER.debug("mock test: getById()");
-
         expect(customerServiceMock.getById(CUSTOMER_1.getCustomerId())).andReturn(CUSTOMER_1);
         replay(customerServiceMock);
 
@@ -150,8 +138,6 @@ public class CustomerControllerMockTest {
 
     @Test
     public void getByName() throws Exception {
-        LOGGER.debug("mock test: getByName()");
-
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER_2);
 

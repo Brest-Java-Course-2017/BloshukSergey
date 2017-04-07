@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
@@ -25,8 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EnableWebMvc
+@EnableAspectJAutoProxy
 @Configuration
-@ComponentScan({"com.cinema.client", "com.cinema.controller.web"})
+@ComponentScan({"com.cinema.client", "com.cinema.controller.web", "com.cinema.aop.aspect"})
 public class SpringWebConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;

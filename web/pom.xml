@@ -26,6 +26,10 @@
       <groupId>com.cinema</groupId>
       <artifactId>client-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.cinema</groupId>
+      <artifactId>aop</artifactId>
+    </dependency>
 
     <!--Spring-->
     <dependency>

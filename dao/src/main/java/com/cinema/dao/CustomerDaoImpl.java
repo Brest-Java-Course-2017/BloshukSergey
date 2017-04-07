@@ -1,8 +1,7 @@
 package com.cinema.dao;
 
+import com.cinema.aop.annotation.Loggable;
 import com.cinema.model.Customer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,6 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     public static final String CUSTOMER_ID = "customerId";
 
     public static final String NAME = "name";
-
-    private static final Logger LOGGER = LogManager.getLogger(CustomerDaoImpl.class);
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -64,9 +61,8 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer add(Customer customer)  throws DataAccessException {
-        LOGGER.debug("add({})", customer);
-
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(customer);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(SQL_ADD, parameterSource, keyHolder);
@@ -75,9 +71,8 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer delete(Integer id) throws DataAccessException {
-        LOGGER.debug("delete({})", id);
-
         SqlParameterSource parameterSource = new MapSqlParameterSource(CUSTOMER_ID, id);
         Integer quantity = namedParameterJdbcTemplate.update(SQL_DELETE, parameterSource);
 
@@ -85,9 +80,8 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer update(Customer customer) throws DataAccessException {
-        LOGGER.debug("update({})", customer);
-
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(customer);
         Integer quantity = namedParameterJdbcTemplate.update(SQL_UPDATE, parameterSource);
 
@@ -95,9 +89,8 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public List<Customer> getByName(String name) throws DataAccessException {
-        LOGGER.debug("getByName({})", name);
-
         SqlParameterSource parameterSource = new MapSqlParameterSource(NAME, name);
         List<Customer> customer = namedParameterJdbcTemplate.query(SQL_GET_BY_NAME, parameterSource, new CustomerRowMapper());
 
@@ -105,9 +98,8 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Customer getById(Integer id) throws DataAccessException {
-        LOGGER.debug("getById({})", id);
-
         SqlParameterSource parameterSource = new MapSqlParameterSource(CUSTOMER_ID, id);
         Customer customers = namedParameterJdbcTemplate.queryForObject(SQL_GET_BY_ID, parameterSource, new CustomerRowMapper());
 
@@ -115,9 +107,8 @@ public class CustomerDaoImpl implements CustomerDao, InitializingBean {
     }
 
     @Override
+    @Loggable
     public List<Customer> getAll() throws DataAccessException {
-        LOGGER.debug("getAll()");
-
         List<Customer> customers = namedParameterJdbcTemplate.query(SQL_GET_ALL, new CustomerRowMapper());
 
         return customers;

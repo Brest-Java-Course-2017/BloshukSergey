@@ -2,8 +2,6 @@ package com.cinema.client;
 
 import com.cinema.client.configuration.SpringClientRestConfiguration;
 import com.cinema.model.Customer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +35,6 @@ public class CustomerClientImplTest {
 
     private static final Integer EXPECTED = 1;
 
-    private static final Logger LOGGER = LogManager.getLogger(CustomerClientImplTest.class);
-
     @Value("${rest.protocol}://${rest.host}:${rest.port}")
     private String url;
 
@@ -64,8 +60,6 @@ public class CustomerClientImplTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("mock test: add()");
-
         String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/add").toString();
 
         expect(mockRestTemplate.postForEntity(httpRequest, CUSTOMER_1, Integer.class))
@@ -80,8 +74,6 @@ public class CustomerClientImplTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("mock test: delete()");
-
         String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/delete?id={id}").toString();
 
         expect(mockRestTemplate.exchange(httpRequest, HttpMethod.DELETE,null, Integer.class, CUSTOMER_1.getCustomerId()))
@@ -96,8 +88,6 @@ public class CustomerClientImplTest {
 
     @Test
     public void update() throws Exception {
-        LOGGER.debug("mock test: update()");
-
         String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/update").toString();
 
         HttpEntity<Customer> entity = new HttpEntity<>(CUSTOMER_1);
@@ -113,8 +103,6 @@ public class CustomerClientImplTest {
 
     @Test
     public void getByName() throws Exception {
-        LOGGER.debug("mock test: getByName()");
-
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER_1);
 
@@ -132,8 +120,6 @@ public class CustomerClientImplTest {
 
     @Test
     public void getById() throws Exception {
-        LOGGER.debug("mock test: getById()");
-
         String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/getById?id={id}").toString();
 
         expect(mockRestTemplate.getForEntity(httpRequest, Customer.class, CUSTOMER_1.getCustomerId()))
@@ -148,8 +134,6 @@ public class CustomerClientImplTest {
 
     @Test
     public void getAll() throws Exception {
-        LOGGER.debug("mock test: getAll()");
-
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER_1);
         customers.add(CUSTOMER_2);

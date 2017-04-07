@@ -3,8 +3,6 @@ package com.cinema.service;
 import com.cinema.configuration.SpringServiceMockTestConfiguration;
 import com.cinema.dao.CustomerDao;
 import com.cinema.model.Customer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,15 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.easymock.EasyMock.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=SpringServiceMockTestConfiguration.class)
 public class CustomerServiceImplMockTest {
-
-    private static final Logger LOGGER = LogManager.getLogger(CustomerServiceImplMockTest.class);
 
     private static final Customer CUSTOMER_1 = new Customer(1, "Sergey Bloshuk");
 
@@ -52,8 +46,6 @@ public class CustomerServiceImplMockTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("mock test: addCustomer()");
-
         expect(customerDaoMock.add(CUSTOMER_1)).andReturn(CUSTOMER_1.getCustomerId());
         replay(customerDaoMock);
 
@@ -65,8 +57,6 @@ public class CustomerServiceImplMockTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("mock test: deleteCustomer()");
-
         expect(customerDaoMock.delete(CUSTOMER_1.getCustomerId())).andReturn(EXPECTED);
         replay(customerDaoMock);
 
@@ -78,8 +68,6 @@ public class CustomerServiceImplMockTest {
 
     @Test
     public void update() throws Exception {
-        LOGGER.debug("mock test: updateCustomer()");
-
         expect(customerDaoMock.update(CUSTOMER_1)).andReturn(EXPECTED);
         replay(customerDaoMock);
 
@@ -91,8 +79,6 @@ public class CustomerServiceImplMockTest {
 
     @Test
     public void getByName() throws Exception {
-        LOGGER.debug("mock test: getByName()");
-
         List<Customer> expectCustomers = new ArrayList<Customer>();
         expectCustomers.add(CUSTOMER_1);
 
@@ -107,8 +93,6 @@ public class CustomerServiceImplMockTest {
 
     @Test
     public void getById() throws Exception {
-        LOGGER.debug("mock test: getById()");
-
         expect(customerDaoMock.getById(CUSTOMER_1.getCustomerId())).andReturn(CUSTOMER_1);
         replay(customerDaoMock);
 
@@ -120,8 +104,6 @@ public class CustomerServiceImplMockTest {
 
     @Test
     public void getAll() throws Exception {
-        LOGGER.debug("mock test: getAll()");
-
         List<Customer> expectCustomers = new ArrayList<Customer>();
         expectCustomers.add(CUSTOMER_1);
         expectCustomers.add(CUSTOMER_2);

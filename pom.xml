@@ -31,6 +31,8 @@
     <jackson-databind.version>2.8.6</jackson-databind.version>
     <servlet-api.version>3.1.0</servlet-api.version>
     <hamcrest-all.version>1.3</hamcrest-all.version>
+    <aspectjrt.version>1.8.10</aspectjrt.version>
+
   </properties>
 
   <modules>
@@ -44,6 +46,7 @@
     <module>client-api</module>
     <module>client-rest</module>
     <module>web</module>
+    <module>aop</module>
 
   </modules>
 
@@ -107,6 +110,11 @@
       <dependency>
         <groupId>com.cinema</groupId>
         <artifactId>web</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cinema</groupId>
+        <artifactId>aop</artifactId>
         <version>${project.version}</version>
       </dependency>
 
@@ -189,6 +197,16 @@
         <artifactId>spring-webmvc</artifactId>
         <version>${spring.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aop</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aspects</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
 
       <!--Database-->
       <dependency>
@@ -233,6 +251,18 @@
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
         <version>${servlet-api.version}</version>
+      </dependency>
+
+      <!--AspectJ-->
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>${aspectjrt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>${aspectjrt.version}</version>
       </dependency>
 
     </dependencies>

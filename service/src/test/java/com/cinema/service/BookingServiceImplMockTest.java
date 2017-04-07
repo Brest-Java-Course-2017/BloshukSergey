@@ -6,8 +6,6 @@ import com.cinema.dao.SessionDao;
 import com.cinema.model.Customer;
 import com.cinema.model.Session;
 import com.cinema.model.SessionWithSeats;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,9 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.easymock.EasyMock.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=SpringServiceMockTestConfiguration.class)
@@ -44,8 +40,6 @@ public class BookingServiceImplMockTest {
     private static SessionWithSeats SESSION_WITH_SEATS_2;
 
     private static final Integer EXPECTED = 1;
-
-    private static final Logger LOGGER = LogManager.getLogger(BookingServiceImplMockTest.class);
 
     @Autowired
     private BookingService bookingService;
@@ -76,8 +70,6 @@ public class BookingServiceImplMockTest {
 
     @Test
     public void getCustomersBySessionId() throws Exception {
-        LOGGER.debug("mock test: getCustomersBySessionId()");
-
         List<Customer> expectCustomers = new ArrayList<Customer>();
         expectCustomers.add(CUSTOMER_1);
         expectCustomers.add(CUSTOMER_2);
@@ -94,8 +86,6 @@ public class BookingServiceImplMockTest {
 
     @Test
     public void getSessionsWithSeats() throws Exception {
-        LOGGER.debug("mock test: getSessionsWithSeats()");
-
         List<SessionWithSeats> expectCustomers = new ArrayList<SessionWithSeats>();
         expectCustomers.add(SESSION_WITH_SEATS_1);
         expectCustomers.add(SESSION_WITH_SEATS_2);
@@ -112,8 +102,6 @@ public class BookingServiceImplMockTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("mock test: delete()");
-
         expect(bookingDaoMock.delete(SESSION.getSessionId(), CUSTOMER_1.getCustomerId())).andReturn(EXPECTED);
         replay(bookingDaoMock);
         replay(sessionDaoMock);
@@ -126,8 +114,6 @@ public class BookingServiceImplMockTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("mock test: add()");
-
         expect(sessionDaoMock.getById(SESSION.getSessionId())).andReturn(SESSION);
         replay(sessionDaoMock);
 

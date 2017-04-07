@@ -2,8 +2,6 @@ package com.cinema.service;
 
 import com.cinema.configuration.SpringServiceTestConfiguration;
 import com.cinema.model.Session;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,9 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=SpringServiceTestConfiguration.class)
@@ -26,8 +22,6 @@ import static org.junit.Assert.assertTrue;
 public class SessionServiceImplTest {
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-
-    private static final Logger LOGGER = LogManager.getLogger(SessionServiceImplTest.class);
 
     @Autowired
     private SessionService sessionService;
@@ -51,8 +45,6 @@ public class SessionServiceImplTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("test: add({})", NEW_SESSION);
-
         Integer sessionId = sessionService.add(NEW_SESSION);
 
         assertNotNull("Session id must be not null", sessionId);
@@ -66,8 +58,6 @@ public class SessionServiceImplTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("test: delete({})", NEW_SESSION);
-
         Integer quantity = sessionService.delete(EXIST_SESSION.getSessionId());
 
         assertNotNull("quantity must be not null", quantity);
@@ -76,8 +66,6 @@ public class SessionServiceImplTest {
 
     @Test
     public void update() throws Exception {
-        LOGGER.debug("test: update()");
-
         Integer quantity = sessionService.update(UPDATE_SESSION);
 
         assertNotNull("Quantity of updated sessions must be not null", quantity);
@@ -86,8 +74,6 @@ public class SessionServiceImplTest {
 
     @Test
     public void getById() throws Exception {
-        LOGGER.debug("test: getById({})", EXIST_SESSION.getSessionId());
-
         Session session = sessionService.getById(EXIST_SESSION.getSessionId());
 
         assertNotNull("Session must be not null", session);
@@ -96,8 +82,6 @@ public class SessionServiceImplTest {
 
     @Test
     public void getAll() throws Exception {
-        LOGGER.debug("test: getAllSessions()");
-
         List<Session> sessions = sessionService.getAll();
 
         assertNotNull("Sessions must be not null", sessions);

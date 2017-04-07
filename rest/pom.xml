@@ -21,6 +21,10 @@
       <groupId>com.cinema</groupId>
       <artifactId>test-db</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.cinema</groupId>
+      <artifactId>aop</artifactId>
+    </dependency>
 
     <!--Spring-->
     <dependency>

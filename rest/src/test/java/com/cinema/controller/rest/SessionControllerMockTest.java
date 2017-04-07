@@ -4,8 +4,6 @@ import com.cinema.configuration.SpringRestMockTestConfiguration;
 import com.cinema.model.Session;
 import com.cinema.service.SessionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,8 +57,6 @@ public class SessionControllerMockTest {
     @Autowired
     private SessionController sessionController;
 
-    private static final Logger LOGGER = LogManager.getLogger(SessionControllerMockTest.class);
-
     @After
     public void clean() {
         verify(sessionServiceMock);
@@ -82,8 +78,6 @@ public class SessionControllerMockTest {
 
     @Test
     public void getAll() throws Exception {
-        LOGGER.debug("mock test: getAll()");
-
         List<Session> sessions = new ArrayList<>();
         sessions.add(SESSION_1);
         sessions.add(SESSION_2);
@@ -97,8 +91,6 @@ public class SessionControllerMockTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("mock test: add()");
-
         expect(sessionServiceMock.add(SESSION_1)).andReturn(SESSION_1.getSessionId());
         replay(sessionServiceMock);
 
@@ -117,8 +109,6 @@ public class SessionControllerMockTest {
 
     @Test
     public void update() throws Exception {
-        LOGGER.debug("mock test: update()");
-
         expect(sessionServiceMock.update(SESSION_1)).andReturn(EXPECTED);
         replay(sessionServiceMock);
 
@@ -137,8 +127,6 @@ public class SessionControllerMockTest {
 
     @Test
     public void deleteSession() throws Exception {
-        LOGGER.debug("mock test: delete()");
-
         expect(sessionServiceMock.delete(SESSION_1.getSessionId())).andReturn(EXPECTED);
         replay(sessionServiceMock);
 
@@ -152,8 +140,6 @@ public class SessionControllerMockTest {
 
     @Test
     public void getById() throws Exception {
-        LOGGER.debug("mock test: getById()");
-
         expect(sessionServiceMock.getById(SESSION_1.getSessionId())).andReturn(SESSION_1);
         replay(sessionServiceMock);
 

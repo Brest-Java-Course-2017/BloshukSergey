@@ -4,8 +4,6 @@ import com.cinema.configuration.SpringRestMockTestConfiguration;
 import com.cinema.model.Customer;
 import com.cinema.model.SessionWithSeats;
 import com.cinema.service.BookingService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,8 +54,6 @@ public class BookingControllerMockTest {
     @Autowired
     private BookingController bookingController;
 
-    private static final Logger LOGGER = LogManager.getLogger(SessionControllerMockTest.class);
-
     @After
     public void clean() {
         verify(bookingServiceMock);
@@ -80,8 +76,6 @@ public class BookingControllerMockTest {
 
     @Test
     public void getCustomersBySessionId() throws Exception {
-        LOGGER.debug("mock test: getCustomersBySessionId()");
-
         String httpRequest = new StringBuffer()
                 .append(BOOKING_URL)
                 .append("/getCustomersBySessionId").toString();
@@ -100,8 +94,6 @@ public class BookingControllerMockTest {
 
     @Test
     public void getSessionsWithSeats() throws Exception {
-        LOGGER.debug("mock test: getSessionsWithSeats()");
-
         String httpRequest = new StringBuffer().append(BOOKING_URL).append("/getSessionsWithSeats").toString();
 
         List<SessionWithSeats> sessions = new ArrayList<>();
@@ -119,8 +111,6 @@ public class BookingControllerMockTest {
 
     @Test
     public void deleteBooking() throws Exception {
-        LOGGER.debug("mock test: delete()");
-
         String httpRequest = new StringBuffer().append(BOOKING_URL).append("/delete").toString();
 
         expect(bookingServiceMock.delete(SESSION_WITH_SEATS_1.getSessionId(), CUSTOMER_1.getCustomerId())).andReturn(EXPECTED);
@@ -137,8 +127,6 @@ public class BookingControllerMockTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("mock test: add()");
-
         String httpRequest = new StringBuffer().append(BOOKING_URL).append("/add").toString();
 
         expect(bookingServiceMock.add(SESSION_WITH_SEATS_1.getSessionId(), CUSTOMER_1.getCustomerId())).andReturn(EXPECTED);

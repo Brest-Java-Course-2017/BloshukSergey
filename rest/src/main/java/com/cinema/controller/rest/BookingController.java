@@ -1,10 +1,9 @@
 package com.cinema.controller.rest;
 
+import com.cinema.aop.annotation.Loggable;
 import com.cinema.model.Customer;
 import com.cinema.model.SessionWithSeats;
 import com.cinema.service.BookingService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
@@ -21,52 +20,46 @@ import java.util.List;
 @RequestMapping(value = "/booking")
 public class BookingController {
 
-    private static final Logger LOGGER = LogManager.getLogger(BookingController.class);
-
     @Autowired
     private BookingService bookingService;
 
     @ResponseBody
+    @Loggable
     @RequestMapping(value = "/getCustomersBySessionId", method = RequestMethod.GET)
     public List<Customer> getCustomersBySessionId(@RequestParam("id") Integer id) {
-        LOGGER.debug("rest: getCustomersBySessionId()");
-
         List<Customer> customers = bookingService.getCustomersBySessionId(id);
 
         return customers;
     }
 
+    @Loggable
     @RequestMapping(value = "/getSessionsWithSeats", method = RequestMethod.GET)
     @ResponseBody
     public List<SessionWithSeats> getSessionsWithSeats(
             @RequestParam(value = "firstDate", required = false)  Date firstDate,
             @RequestParam(value = "secondDate", required = false)  Date secondDate) throws ParseException {
-        LOGGER.debug("rest: getSessionsWithSeats({}, {})", firstDate, secondDate);
-
         List<SessionWithSeats> sessions = sessions = bookingService.getSessionsWithSeats(firstDate, secondDate);
 
         return sessions;
     }
 
+    @Loggable
     @ResponseBody
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public Integer delete(@RequestParam(value = "sessionId") Integer sessionId,
                           @RequestParam(value = "customerId") Integer customerId) {
-        LOGGER.debug("rest: delete()");
-
         Integer quantity = bookingService.delete(sessionId, customerId);
 
         return quantity;
     }
 
+    @Loggable
     @ResponseBody
     @ResponseStatus(value = HttpStatus.CREATED)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Integer add(@RequestParam(value = "sessionId") Integer sessionId,
                        @RequestParam(value = "customerId") Integer customerId) throws IllegalArgumentException {
-        LOGGER.debug("rest: add()");
-
         Integer quantity = bookingService.add(sessionId, customerId);
 
         return quantity;

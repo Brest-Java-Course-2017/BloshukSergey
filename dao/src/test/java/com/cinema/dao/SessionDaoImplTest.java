@@ -2,8 +2,6 @@ package com.cinema.dao;
 
 import com.cinema.configuration.SpringDaoTestConfiguration;
 import com.cinema.model.Session;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,9 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=SpringDaoTestConfiguration.class)
@@ -35,8 +31,6 @@ public class SessionDaoImplTest {
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-    private static final Logger LOGGER = LogManager.getLogger(SessionDaoImplTest.class);
-
     @Autowired
     private SessionDao sessionDao;
 
@@ -51,8 +45,6 @@ public class SessionDaoImplTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("test: addSession({})", NEW_SESSION);
-
         Integer sessionId = sessionDao.add(NEW_SESSION);
 
         assertNotNull("Session id must be not null", sessionId);
@@ -66,8 +58,6 @@ public class SessionDaoImplTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("test: delete({})", EXIST_SESSION.getSessionId());
-
         Integer quantityDeleted = sessionDao.delete(EXIST_SESSION.getSessionId());
 
         assertNotNull("Quantity of delete sessions must be not null", quantityDeleted);
@@ -76,8 +66,6 @@ public class SessionDaoImplTest {
 
     @Test
     public void update() throws Exception {
-        LOGGER.debug("test: update(from {} to {})", EXIST_SESSION, UPDATE_SESSION);
-
         Integer quantity = sessionDao.update(UPDATE_SESSION);
 
         assertNotNull("Quantity of updated sessions must be not null", quantity);
@@ -86,8 +74,6 @@ public class SessionDaoImplTest {
 
     @Test
     public void getById() throws Exception {
-        LOGGER.debug("test: getById({})", EXIST_SESSION.getSessionId());
-
         Session session = sessionDao.getById(EXIST_SESSION.getSessionId());
 
         assertNotNull("Session must be not null", session);
@@ -97,8 +83,6 @@ public class SessionDaoImplTest {
 
     @Test
     public void getAll() throws Exception {
-        LOGGER.debug("test: getAllSessions()");
-
         List<Session> sessions = sessionDao.getAll();
 
         assertNotNull("Sessions must be not null", sessions);

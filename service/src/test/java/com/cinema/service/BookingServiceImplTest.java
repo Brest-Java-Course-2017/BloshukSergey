@@ -28,8 +28,6 @@ public class BookingServiceImplTest {
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-    private static final Logger LOGGER = LogManager.getLogger(BookingServiceImplTest.class);
-
     private static Session EXIST_SESSION;
 
     private static Customer EXIST_CUSTOMER = new Customer(1, "Sergey Bloshuk");
@@ -57,8 +55,6 @@ public class BookingServiceImplTest {
 
     @Test
     public void getCustomersBySessionId() throws Exception {
-        LOGGER.debug("test: getCustomersBySessionId()");
-
         List<Customer> customers = bookingService.getCustomersBySessionId(EXIST_SESSION.getSessionId());
 
         assertNotNull("Customers must be not null", customers);
@@ -67,8 +63,6 @@ public class BookingServiceImplTest {
 
     @Test
     public void getSessionsWithSeats() throws Exception {
-        LOGGER.debug("test: getSessionsWithSeats()");
-
         List<SessionWithSeats> sessionWithSeats = bookingService.getSessionsWithSeats(null, null);
 
         assertNotNull("sessionWithSeats must be not null", sessionWithSeats);
@@ -77,8 +71,6 @@ public class BookingServiceImplTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("test: delete()");
-
         Integer quantityDeleted = bookingService.delete(EXIST_SESSION.getSessionId(), EXIST_CUSTOMER.getCustomerId());
 
         assertNotNull("Quantity of delete must be not null", quantityDeleted);
@@ -87,8 +79,6 @@ public class BookingServiceImplTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("test: add()");
-
         Integer id = bookingService.add(EXIST_SESSION.getSessionId(), EXIST_CUSTOMER_2.getCustomerId());
 
         assertNotNull("Session id must be not null", id);
@@ -96,8 +86,6 @@ public class BookingServiceImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void addNotExist() throws Exception {
-        LOGGER.debug("test: addNotExist()");
-
         bookingService.add(EXIST_SESSION.getSessionId(), EXIST_CUSTOMER.getCustomerId());
     }
 }

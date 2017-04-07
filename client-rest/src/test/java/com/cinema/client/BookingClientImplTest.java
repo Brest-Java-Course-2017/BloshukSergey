@@ -3,8 +3,6 @@ package com.cinema.client;
 import com.cinema.client.configuration.SpringClientRestConfiguration;
 import com.cinema.model.Customer;
 import com.cinema.model.SessionWithSeats;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +10,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.*;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
@@ -40,8 +40,6 @@ public class BookingClientImplTest {
 
     @Autowired
     private BookingClient bookingClient;
-
-    private static final Logger LOGGER = LogManager.getLogger(BookingClientImplTest.class);
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
@@ -73,8 +71,6 @@ public class BookingClientImplTest {
 
     @Test
     public void getCustomersBySessionId() throws Exception {
-        LOGGER.debug("mock test: getCustomersBySessionId()");
-
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER);
 
@@ -98,8 +94,6 @@ public class BookingClientImplTest {
 
     @Test
     public void getSessionsWithSeatsDateToDate() throws Exception {
-        LOGGER.debug("mock test: getSessionsWithSeatsDateToDate()");
-
         List<SessionWithSeats> sessions = new ArrayList<>();
         sessions.add(SESSION_WITH_SEATS);
 
@@ -124,8 +118,6 @@ public class BookingClientImplTest {
 
     @Test
     public void getSessionsWithSeats() throws Exception {
-        LOGGER.debug("mock test: getSessionsWithSeats()");
-
         List<SessionWithSeats> sessions = new ArrayList<>();
         sessions.add(SESSION_WITH_SEATS);
 
@@ -146,8 +138,6 @@ public class BookingClientImplTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("mock test: delete()");
-
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)
@@ -169,8 +159,6 @@ public class BookingClientImplTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("mock test: add()");
-
         String httpRequest = new StringBuffer()
                 .append(url)
                 .append(urlBooking)

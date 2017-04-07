@@ -9,39 +9,18 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>service</artifactId>
+  <artifactId>aop</artifactId>
 
   <dependencies>
-    <!--Project-->
-    <dependency>
-      <groupId>com.cinema</groupId>
-      <artifactId>model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.cinema</groupId>
-      <artifactId>dao</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.cinema</groupId>
-      <artifactId>dao-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.cinema</groupId>
-      <artifactId>service-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.cinema</groupId>
-      <artifactId>test-db</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.cinema</groupId>
-      <artifactId>aop</artifactId>
-    </dependency>
 
     <!--Spring-->
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
+      <artifactId>spring-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -49,7 +28,21 @@
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-tx</artifactId>
+      <artifactId>spring-aspects</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+    </dependency>
+
+    <!--AspectJ-->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
     </dependency>
 
     <!--Log4j2-->
@@ -65,19 +58,6 @@
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-jcl</artifactId>
     </dependency>
-
-    <!--Mock-->
-    <dependency>
-      <groupId>org.easymock</groupId>
-      <artifactId>easymock</artifactId>
-    </dependency>
-
-    <!--Test-->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-
   </dependencies>
 
 </project>

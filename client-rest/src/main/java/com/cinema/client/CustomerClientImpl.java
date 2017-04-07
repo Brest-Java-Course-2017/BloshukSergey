@@ -1,9 +1,8 @@
 package com.cinema.client;
 
+import com.cinema.aop.annotation.Loggable;
 import com.cinema.client.exception.ServerDataAccessException;
 import com.cinema.model.Customer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,36 +29,33 @@ public class CustomerClientImpl implements CustomerClient, InitializingBean {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final Logger LOGGER = LogManager.getLogger(CustomerClientImpl.class);
-
-
+    @Loggable
     @Override
     public Integer add(Customer customer) throws ServerDataAccessException {
-        LOGGER.debug("add({})", customer);
-
         String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/add").toString();
+
         ResponseEntity responseEntity = restTemplate.postForEntity(httpRequest, customer, Integer.class);
         Integer customerId = (Integer) responseEntity.getBody();
 
         return customerId;
     }
 
+    @Loggable
     @Override
     public Integer delete(Integer id) throws ServerDataAccessException {
-        LOGGER.debug("delete({})", id);
-
         String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/delete?id={id}").toString();
+
         ResponseEntity<Integer> response = restTemplate.exchange(httpRequest, HttpMethod.DELETE,null, Integer.class, id);
         Integer quantity = response.getBody();
 
         return quantity;
     }
 
+    @Loggable
     @Override
     public Integer update(Customer customer) throws ServerDataAccessException {
-        LOGGER.debug("update({})", customer);
-
         String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/update").toString();
+
         HttpEntity<Customer> entity = new HttpEntity<>(customer);
         ResponseEntity<Integer> response= restTemplate.exchange(httpRequest, HttpMethod.PUT, entity, Integer.class);
         Integer quantity = response.getBody();
@@ -67,32 +63,31 @@ public class CustomerClientImpl implements CustomerClient, InitializingBean {
         return quantity;
     }
 
+    @Loggable
     @Override
     public List<Customer> getByName(String name) throws ServerDataAccessException {
-        LOGGER.debug("getByName({})", name);
-
         String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/getByName?name={name}").toString();
+
         ResponseEntity responseEntity = restTemplate.getForEntity(httpRequest, List.class, name);
         List<Customer> customers = (List<Customer>) responseEntity.getBody();
 
         return customers;
     }
 
+    @Loggable
     @Override
     public Customer getById(Integer id) throws ServerDataAccessException {
-        LOGGER.debug("getById({})", id);
-
         String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/getById?id={id}").toString();
+
         ResponseEntity responseEntity = restTemplate.getForEntity(httpRequest, Customer.class, id);
         Customer customer = (Customer) responseEntity.getBody();
 
         return customer;
     }
 
+    @Loggable
     @Override
     public List<Customer> getAll() throws ServerDataAccessException {
-        LOGGER.debug("getAll()");
-
         String httpRequest = new StringBuffer().append(url).append(urlCustomer).append("/getAll").toString();
         ResponseEntity responseEntity = restTemplate.getForEntity(url + urlCustomer + "/getAll", List.class);
         List<Customer> customers = (List<Customer>) responseEntity.getBody();

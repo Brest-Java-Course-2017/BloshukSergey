@@ -2,8 +2,6 @@ package com.cinema.client;
 
 import com.cinema.client.configuration.SpringClientRestConfiguration;
 import com.cinema.model.Session;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,8 +45,6 @@ public class SessionClientImplTest {
 
     private static final Integer EXPECTED = 1;
 
-    private static final Logger LOGGER = LogManager.getLogger(SessionClientImplTest.class);
-
     @Value("${rest.protocol}://${rest.host}:${rest.port}")
     private String url;
 
@@ -81,8 +77,6 @@ public class SessionClientImplTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("mock test: add()");
-
         String httpRequest = new StringBuffer().append(url).append(urlSession).append("/add").toString();
 
         expect(mockRestTemplate.postForEntity(httpRequest, SESSION_1, Integer.class))
@@ -97,8 +91,6 @@ public class SessionClientImplTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("mock test: deleteSession()");
-
         String httpRequest = new StringBuffer().append(url).append(urlSession).append("/delete?id={id}").toString();
 
         expect(mockRestTemplate.exchange(httpRequest, HttpMethod.DELETE, null, Integer.class, SESSION_1.getSessionId()))
@@ -113,8 +105,6 @@ public class SessionClientImplTest {
 
     @Test
     public void update() throws Exception {
-        LOGGER.debug("mock test: update()");
-
         String httpRequest = new StringBuffer().append(url).append(urlSession).append("/update").toString();
 
         HttpEntity<Session> entity = new HttpEntity<>(SESSION_1);
@@ -130,8 +120,6 @@ public class SessionClientImplTest {
 
     @Test
     public void getById() throws Exception {
-        LOGGER.debug("mock test: getById()");
-
         String httpRequest = new StringBuffer().append(url).append(urlSession).append("/getById?id={id}").toString();
         expect(mockRestTemplate.getForEntity(httpRequest, Session.class, SESSION_1.getSessionId()))
                 .andReturn(new ResponseEntity<Session>(SESSION_1, HttpStatus.FOUND));
@@ -145,8 +133,6 @@ public class SessionClientImplTest {
 
     @Test
     public void getAll() throws Exception {
-        LOGGER.debug("mock test: getAll()");
-
         List<Session> sessions = new ArrayList<>();
         sessions.add(SESSION_1);
         sessions.add(SESSION_2);

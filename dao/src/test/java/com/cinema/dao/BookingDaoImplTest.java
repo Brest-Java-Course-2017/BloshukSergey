@@ -4,8 +4,6 @@ import com.cinema.configuration.SpringDaoTestConfiguration;
 import com.cinema.model.Customer;
 import com.cinema.model.Session;
 import com.cinema.model.SessionWithSeats;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,13 +13,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=SpringDaoTestConfiguration.class)
@@ -29,8 +25,6 @@ import static org.junit.Assert.assertTrue;
 public class BookingDaoImplTest {
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-
-    private static final Logger LOGGER = LogManager.getLogger(SessionDaoImplTest.class);
 
     private static Session EXIST_SESSION;
 
@@ -59,8 +53,6 @@ public class BookingDaoImplTest {
 
     @Test
     public void getCustomersBySessionId() throws Exception {
-        LOGGER.debug("test: getCustomersBySessionId()");
-
         List<Customer> customers = bookingDao.getCustomersBySessionId(EXIST_SESSION.getSessionId());
 
         assertNotNull("Customers must be not null", customers);
@@ -69,8 +61,6 @@ public class BookingDaoImplTest {
 
     @Test
     public void getSessionsWithSeats() throws Exception {
-        LOGGER.debug("test: getSessionsWithSeats()");
-
         List<SessionWithSeats> sessionWithSeats = bookingDao.getSessionsWithSeats(null, null);
 
         assertNotNull("sessionWithSeats must be not null", sessionWithSeats);
@@ -79,8 +69,6 @@ public class BookingDaoImplTest {
 
     @Test
     public void getSessionsWithSeatsDateToDate() throws Exception {
-        LOGGER.debug("test: getSessionWithSeats()");
-
         List<SessionWithSeats> sessionWithSeats = bookingDao.getSessionsWithSeats(FIRST_DATE, SECOND_DATE);
 
         assertNotNull("sessionWithSeats must be not null", sessionWithSeats);
@@ -89,8 +77,6 @@ public class BookingDaoImplTest {
 
     @Test
     public void delete() throws Exception {
-        LOGGER.debug("test: delete()");
-
         Integer quantityDeleted = bookingDao.delete(EXIST_SESSION.getSessionId(), EXIST_CUSTOMER.getCustomerId());
 
         assertNotNull("Quantity of delete must be not null", quantityDeleted);
@@ -99,8 +85,6 @@ public class BookingDaoImplTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("test: add()");
-
         Integer id = bookingDao.add(EXIST_SESSION.getSessionId(), EXIST_CUSTOMER_2.getCustomerId());
 
         assertNotNull("Session id must be not null", id);
@@ -108,8 +92,6 @@ public class BookingDaoImplTest {
 
     @Test
     public void getSeatsBySessionId() throws Exception {
-        LOGGER.debug("test: getSeatsBySessionId()");
-
         Integer seats = bookingDao.getSeatsBySessionId(EXIST_SESSION.getSessionId());
 
         assertNotNull("Seats must be not null", seats);
@@ -118,8 +100,6 @@ public class BookingDaoImplTest {
 
     @Test
     public void checkUpBooking1() throws Exception {
-        LOGGER.debug("test: getSeatsBySessionId()");
-
         Boolean flag = bookingDao.checkUpBooking(EXIST_SESSION.getSessionId(), EXIST_CUSTOMER.getCustomerId());
 
         assertNotNull("Flag must be not null", flag);

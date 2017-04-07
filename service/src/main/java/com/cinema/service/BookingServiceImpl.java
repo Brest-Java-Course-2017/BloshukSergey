@@ -1,12 +1,11 @@
 package com.cinema.service;
 
+import com.cinema.aop.annotation.Loggable;
 import com.cinema.dao.BookingDao;
 import com.cinema.dao.SessionDao;
 import com.cinema.model.Customer;
 import com.cinema.model.Session;
 import com.cinema.model.SessionWithSeats;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,6 @@ import static org.springframework.util.Assert.notNull;
 @Transactional
 public class BookingServiceImpl implements BookingService, InitializingBean {
 
-    private static final Logger LOGGER = LogManager.getLogger(BookingServiceImpl.class);
-
     @Autowired
     private BookingDao bookingDao;
 
@@ -33,9 +30,8 @@ public class BookingServiceImpl implements BookingService, InitializingBean {
     private SessionDao sessionDao;
 
     @Override
+    @Loggable
     public List<Customer> getCustomersBySessionId(Integer id) throws DataAccessException {
-        LOGGER.debug("getCustomersBySessionId({})", id);
-
         notNull(id, "Id must not be null");
         isTrue(id > 0, "Id must be greater than 0");
 
@@ -45,9 +41,8 @@ public class BookingServiceImpl implements BookingService, InitializingBean {
     }
 
     @Override
+    @Loggable
     public List<SessionWithSeats> getSessionsWithSeats(Date firstDate, Date secondDate) throws DataAccessException {
-        LOGGER.debug("getSessionWithSeats({}, {})", firstDate, secondDate);
-
         if(firstDate != null && secondDate != null)
             isTrue(firstDate.compareTo(secondDate) < 0, "First date must be less than second date");
 
@@ -57,9 +52,8 @@ public class BookingServiceImpl implements BookingService, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer delete(Integer sessionId, Integer customerId) throws DataAccessException {
-        LOGGER.debug("delete({}, {})", sessionId, customerId);
-
         notNull(sessionId, "sessionId must not be null");
         notNull(customerId, "customerId must not be null");
 
@@ -69,9 +63,8 @@ public class BookingServiceImpl implements BookingService, InitializingBean {
     }
 
     @Override
+    @Loggable
     public Integer add(Integer sessionId, Integer customerId) throws DataAccessException {
-        LOGGER.debug("add({}, {})", sessionId, customerId);
-
         notNull(sessionId, "sessionId must not be null");
         notNull(customerId, "customerId must not be null");
 

@@ -4,8 +4,6 @@ import com.cinema.client.CustomerClient;
 import com.cinema.configuration.SpringWebMockTestConfiguration;
 import com.cinema.model.Customer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,8 +42,6 @@ public class CustomerControllerTest {
 
     private MockMvc mockMvc;
 
-    private static final Logger LOGGER = LogManager.getLogger(CustomerControllerTest.class);
-
     @Autowired
     private CustomerClient customerClientMock;
 
@@ -66,8 +62,6 @@ public class CustomerControllerTest {
 
     @Test
     public void getCustomers() throws Exception {
-        LOGGER.debug("test: getCustomers()");
-
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER);
 
@@ -82,8 +76,6 @@ public class CustomerControllerTest {
 
     @Test
     public void searchCustomers() throws Exception {
-        LOGGER.debug("test: searchCustomers()");
-
         List<Customer> customers = new ArrayList<>();
         customers.add(CUSTOMER);
 
@@ -100,8 +92,6 @@ public class CustomerControllerTest {
 
     @Test
     public void customerView() throws Exception {
-        LOGGER.debug("test: customerView()");
-
         expect(customerClientMock.getById(CUSTOMER.getCustomerId())).andReturn(CUSTOMER);
         replay(customerClientMock);
 
@@ -113,8 +103,6 @@ public class CustomerControllerTest {
 
     @Test
     public void deleteCustomer() throws Exception {
-        LOGGER.debug("test: delete()");
-
         expect(customerClientMock.delete(CUSTOMER.getCustomerId())).andReturn(EXPECTED);
         replay(customerClientMock);
 
@@ -125,8 +113,6 @@ public class CustomerControllerTest {
 
     @Test
     public void add() throws Exception {
-        LOGGER.debug("test: add()");
-
         expect(customerClientMock.add(CUSTOMER)).andReturn(EXPECTED);
         replay(customerClientMock);
 
@@ -139,8 +125,6 @@ public class CustomerControllerTest {
 
     @Test
     public void update() throws Exception {
-        LOGGER.debug("test: update()");
-
         expect(customerClientMock.update(CUSTOMER)).andReturn(EXPECTED);
         replay(customerClientMock);
 
